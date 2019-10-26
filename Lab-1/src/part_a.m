@@ -3,7 +3,7 @@
 %
 %   Authors : Spyridakis Christos
 %   Created Date : 26/10/2019
-%   Last Updated : 26/10/2019
+%   Last Updated : 27/10/2019
 %
 %   Description: 
 %               Code created for Exercises of Communication Systems Course
@@ -32,21 +32,21 @@ T=10^-2 ; over=10 ; Ts=T/over ; A=4 ; a=[0 0.5 1] ; phi_t = [] ; t=[] ;
 
 % Create srrc pulses and plot them 
 f=figure(); p=[];
-for i=1:length(a)
-  [phi_tmp t_tmp] = srrc_pulse(T, Ts, A, a(i));
-  phi_t = [phi_t; phi_tmp];
-  t = t_tmp;
-  
-  % Plot each srrc with some color and save plot to add extra info later  
-  p_tmp = plot(t, phi_t(i,:), colors(i)) ; p=[p ; p_tmp];
-  hold on
-end
-hold off
+  for i=1:length(a)
+    [phi_tmp t_tmp] = srrc_pulse(T, Ts, A, a(i));
+    phi_t = [phi_t; phi_tmp];
+    t = t_tmp;
+    
+    % Plot each srrc with some color and save plot to add extra info later  
+    p_tmp = plot(t, phi_t(i,:), colors(i)) ; p=[p ; p_tmp];
+    hold on
+  end
+  hold off
 
-% Add more info to plots                                           
-% TODO: Check axis on matlab
-axis=([-0.05 0.05 -4 15]) ; legend([p],'a=0', 'a=0.5', 'a=1'); legend('Location','NorthEast'); grid on;
-title(strcat(part,stepName)); ylabel('\phi(t)'); xlabel('T(sec)');  
+  % Add more info to plots                                           
+  % TODO: Check axis on matlab
+  axis=([-0.05 0.05 -4 15]) ; legend([p],'a=0', 'a=0.5', 'a=1'); legend('Location','NorthEast'); grid on;
+  title(strcat(part,stepName)); ylabel('\phi(t)'); xlabel('T(sec)');  
 if ~DEBUG ; saveas(f,strcat(dirpath, '/', part, stepName, extraInfo, ext)) ; end 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -58,15 +58,14 @@ Phi_F1 = [] ; Phi_F2 = []
 
 % Calculate frequency vectors
 Fs = 1/Ts ; Nf = [1024 2048] ;              
-F_1 = [-Fs/2 : Fs/Nf(1) : Fs/2-Fs/Nf(1)];   % Frequency vector for N=1024
-F_2 = [-Fs/2 : Fs/Nf(2) : Fs/2-Fs/Nf(2)];   % Frequency vector for N=2048
+F_1 = [-Fs/2 : Fs/Nf(1) : Fs/2-Fs/Nf(1)];   % Frequency vector for Nf=1024
+F_2 = [-Fs/2 : Fs/Nf(2) : Fs/2-Fs/Nf(2)];   % Frequency vector for Nf=2048
 
 %Fourier Transform and save to vector
 for i=1:length(a)
   X1 = fftshift(fft(phi_t(i,:),Nf(1))*Ts) ; Phi_F1 = [Phi_F1 ; X1] ;
   X2 = fftshift(fft(phi_t(i,:),Nf(2))*Ts) ; Phi_F2 = [Phi_F2 ; X2] ; 
 end
-
 
 % Plot them 
 f=figure();  extraInfo='-Plots';
@@ -76,14 +75,14 @@ f=figure();  extraInfo='-Plots';
   p2 = plot(F_1, abs(Phi_F1(2,:)).^2); hold on;
   p3 = plot(F_1, abs(Phi_F1(3,:)).^2); hold off;
   legend([p1,p2,p3],'a=0', 'a=0.5', 'a=1'); legend('Location','NorthEast'); grid on;
-  title(strcat('Nf=1024')); ylabel('|\Phi(F)|^2'); xlabel('F(Hz)');
+  title(strcat('Spectral energy density-','Nf=1024')); ylabel('|\Phi(F)|^2'); xlabel('F(Hz)');
   % Nf = 2048
   subplot(1,2,2); 
   p1 = plot(F_2, abs(Phi_F2(1,:)).^2); hold on;
   p2 = plot(F_2, abs(Phi_F2(2,:)).^2); hold on;
   p3 = plot(F_2, abs(Phi_F2(3,:)).^2); hold off;
   legend([p1,p2,p3],'a=0', 'a=0.5', 'a=1'); legend('Location','NorthEast'); grid on;
-  title(strcat('Nf=2048')); ylabel('|\Phi(F)|^2'); xlabel('F(Hz)');
+  title(strcat('Spectral energy density-','Nf=2048')); ylabel('|\Phi(F)|^2'); xlabel('F(Hz)');
   
 %  sgtitle(strcat(part, stepName, extraInfo)) ; %  suptitle(strcat(part, stepName, extraInfo));  %TODO
 if ~DEBUG ; saveas(f,strcat(dirpath, '/', part, stepName, extraInfo, ext)) ; end
@@ -97,31 +96,30 @@ f=figure(); extraInfo='-Semilogy';
   p2 = semilogy(F_1, abs(Phi_F1(2,:)).^2); hold on;
   p3 = semilogy(F_1, abs(Phi_F1(3,:)).^2); hold off;
   legend([p1, p2, p3],'a=0', 'a=0.5', 'a=1'); legend('Location','NorthEast'); grid on;
-  title(strcat('Nf=1024')); ylabel('|\Phi(F)|^2'); xlabel('F(Hz)');
+  title(strcat('Spectral energy density (log)-','Nf=1024')); ylabel('|\Phi(F)|^2'); xlabel('F(Hz)');
   % Nf = 2048
   subplot(2,1,2); 
   p1 = semilogy(F_2, abs(Phi_F2(1,:)).^2); hold on;
   p2 = semilogy(F_2, abs(Phi_F2(2,:)).^2); hold on;
   p3 = semilogy(F_2, abs(Phi_F2(3,:)).^2); hold off;
   legend([p1, p2, p3],'a=0', 'a=0.5', 'a=1'); legend('Location','NorthEast'); grid on;
-  title(strcat('Nf=2048')); ylabel('|\Phi(F)|^2'); xlabel('F(Hz)');
+  title(strcat('Spectral energy density (log)-','Nf=2048')); ylabel('|\Phi(F)|^2'); xlabel('F(Hz)');
   
 %  sgtitle(strcat(part, stepName, extraInfo)) ; %  suptitle(strcat(part, stepName, extraInfo));  %TODO
 if ~DEBUG ; saveas(f,strcat(dirpath, '/', part, stepName, extraInfo, ext)) ; end
 
-%close all % TODO
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 1.3
 %
 % Init mantatory variable 
 stepName = '1.3 Bandwidth'; extraInfo='';
 
-% Theoritical Bandwidth Nf=1024
+% Theoritical Bandwidth
 BW=(1+a)./(2*T)
-c = [T/(10^3) T/(10^5)];
-c1 = c(1)*ones(length(F_1));
-c2 = c(2)*ones(length(F_1));
 
+% Practical Bandwith 
+c = [T/(10^3) T/(10^5)];
 figure()
   % Nf = 1024
   subplot(2,1,1); 
