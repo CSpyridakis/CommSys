@@ -41,31 +41,65 @@ end
 stepName='Shifting \phi'; %TODO
 % for a = 0, 0.5, 1 and k=0,1,2,4 plot phi(t) and phi(t-kT)
 f=figure(); p=[];
+  for i=1:length(a)
+    subplot(3,1,i) ; col=2;
+    for k=[0 1 2 4]
+      t_s=[-A*T:Ts:(A+k)*T];                         % time vector with needed extra time added for shifting
+      phi_t_za=[phi_t(i,:) zeros(1,k*over)];         % φ(t) (with zeros added)
+      phi_kt_za=[zeros(1,k*over) phi_t(i,:)];        % φ(t-kT) (with zeros added)
+      
+      % Plot once initial signal then plot others
+      if k==0 
+        p_tmp = plot(t_s, phi_t_za, strcat(colors(1),'r-')) ; p=[p ; p_tmp]; hold on ; 
+        p_tmp = plot(t_s, phi_kt_za, strcat(colors(col),valueStyles(col))) ; p=[p ; p_tmp]; col=col+1; hold on;
+      else
+        p_tmp = plot(t_s, phi_kt_za, strcat(colors(col),'-',valueStyles(col))) ; p=[p ; p_tmp]; col=col+1; hold on;
+      end
+    end
+    hold off;
+    legend([p],'\phi(t)','\phi(t-kT), k=0', '\phi(t-kT), k=1', '\phi(t-kT), k=2', '\phi(t-kT), k=4'); legend('Location','NorthEast'); grid on;
+    title(strcat(part,stepName, '-a=',num2str(a(i)))); ylabel('\phi(t)'); xlabel('T(sec)'); 
+  end
+  %suptitle('All');
+if ~DEBUG ; saveas(f,strcat(dirpath, '/', part, stepName, extraInfo, ext)) ; end
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 1.2
+stepName='2'; %TODO
+% for a = 0, 0.5, 1 and k=0,2,4 plot phi(t)*phi(t-kT)
+f=figure(); p=[]; p_num=1;
+  for i=1:length(a)
+    for k=[0 1 2 4]
+      subplot(3,4,p_num) ; p_num++; col=2;
+      t_s=[-A*T:Ts:(A+k)*T];                         % time vector with needed extra time added for shifting
+      phi_t_za=[phi_t(i,:) zeros(1,k*over)];         % φ(t) (with zeros added)
+      phi_kt_za=[zeros(1,k*over) phi_t(i,:)];        % φ(t-kT) (with zeros added)
+      
+%      p_tmp = plot(t_s, phi_t_za, strcat('r-')) ; p=[p ; p_tmp]; hold on ;              % φ(t) 
+%      p_tmp = plot(t_s, phi_kt_za, strcat('b-.')) ; p=[p ; p_tmp]; hold on   % φ(t-kT)
+      p_tmp = plot(t_s, phi_t_za.*phi_kt_za,'m') ; p=[p ; p_tmp]; hold off;
+%      legend([p],'\phi(t)','\phi(t-kT)','\phi(t)*\phi(t-kT)'); legend('Location','NorthEast'); grid on;
+      title(strcat(part,stepName, ' a=',num2str(a(i)), ' k=', num2str(k))); ylabel('\phi(t)*\phi(t-kT)'); xlabel('T(sec)'); 
+    end
+  end
+  %suptitle('All');
+if ~DEBUG ; saveas(f,strcat(dirpath, '/', part, stepName, extraInfo, ext)) ; end
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 1.3
+stepName='3'; integrals=[]%TODO
 for i=1:length(a)
-  subplot(3,1,i) ; col=2;
-  for k=[0 1 2 4]
-    t_s=[-A*T:Ts:(A+k)*T];                         % time vector with needed extra time added for shifting
+  for k=[0 2 4]
     phi_t_za=[phi_t(i,:) zeros(1,k*over)];         % φ(t) (with zeros added)
     phi_kt_za=[zeros(1,k*over) phi_t(i,:)];        % φ(t-kT) (with zeros added)
-    
-    % Plot once initial signal then plot others
-    if k==0 
-      p_tmp = plot(t_s, phi_t_za, strcat(colors(1),'r-')) ; p=[p ; p_tmp]; hold on ; 
-      p_tmp = plot(t_s, phi_kt_za, strcat(colors(col),valueStyles(col))) ; p=[p ; p_tmp]; col=col+1; hold on;
-    else
-      p_tmp = plot(t_s, phi_kt_za, strcat(colors(col),'-',valueStyles(col))) ; p=[p ; p_tmp]; col=col+1; hold on;
-    end
-        
+  
+    integrals=[integrals sprintf('a=%d, k=%d, integral=%f\n',a(i),k,sum(phi_t_za.*phi_kt_za)*Ts)];
   end
-  hold off;
-  legend([p],'\phi(t)','\phi(t-kT), k=0', '\phi(t-kT), k=1', '\phi(t-kT), k=2', '\phi(t-kT), k=4'); legend('Location','NorthEast'); grid on;
-  title(strcat(part,stepName, 'a=',num2str(a(i)))); ylabel('\phi(t)'); xlabel('T(sec)'); 
 end
 
-
-
-
-
+disp(integrals)
 
 
 
