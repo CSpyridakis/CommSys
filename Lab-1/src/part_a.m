@@ -123,7 +123,7 @@ f=figure();
   p3 = semilogy(F_1, abs(Phi_F1(3,:)).^2); hold on;
   p4 = plot(xlim ,[c(1) c(1)]); hold on;
   p5 = plot(xlim ,[c(2) c(2)]); hold off
-  legend([p1, p2, p3, p4, p5],'logP(F), a=0', 'logP(F), a=0.5', 'logP(F), a=1' , 'C=T/10^3', 'C=T/10^5'); legend('Location','NorthEast'); grid off;
+  legend([p1, p2, p3, p4, p5],'a=0', 'a=0.5', 'a=1' , 'C=T/10^3', 'C=T/10^5'); legend('Location','NorthEast'); grid off;
   title('A.3 Spectral Energy Density Nf=1024'); ylabel('|\Phi(F)|^2 in log'); xlabel('F(Hz)');
 
   % Nf = 2048
@@ -133,7 +133,7 @@ f=figure();
   p3 = semilogy(F_2, abs(Phi_F2(3,:)).^2); hold on;
   p4 = plot(xlim ,[c(1) c(1)]); hold on;
   p5 = plot(xlim ,[c(2) c(2)]); hold off
-  legend([p1, p2, p3, p4, p5],'logP(F), a=0', 'logP(F), a=0.5', 'logP(F), a=1' , 'C=T/10^3', 'C=T/10^5'); legend('Location','NorthEast'); grid off;
+  legend([p1, p2, p3, p4, p5],'a=0', 'a=0.5', 'a=1' , 'C=T/10^3', 'C=T/10^5'); legend('Location','NorthEast'); grid off;
   title('A.3 Spectral Energy Density  Nf=2048'); ylabel('|\Phi(F)|^2 in log'); xlabel('F(Hz)');
 if ~DEBUG ; saveas(f,strcat(dirpath, '/', part, stepName, extraInfo, ext)) ; end
 
