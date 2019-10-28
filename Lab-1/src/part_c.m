@@ -37,7 +37,7 @@ X = bits_to_2PAM(b);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % C.2.b
-stepName = '2.b X_δ(t)'; extraInfo = ''; 
+stepName = '2.b X_d(t)'; extraInfo = ''; 
 %Create signal
 Ts=T/over; 
 X_delta = 1/Ts * upsample(X, over);
@@ -50,7 +50,6 @@ if ~DEBUG ; saveas(f,strcat(dirpath, '/', part, stepName, extraInfo, ext)) ; end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % C.2.c
-%TODO FROM HERE
 stepName = '2.c '; extraInfo = ' X(t)'; 
 %Create SRRC signal 
 [phi t_phi] = srrc_pulse(T, Ts, A, a);
@@ -62,7 +61,7 @@ X_t=conv(X_delta,phi)*Ts;
 %Plot Xδ(t) ** phi(t)
 f=figure();
 plot(t_Xd_conv_phi, X_t, 'b') ; grid on;
-title(strcat(part,stepName,' X_δ(t) ** \phi(t), for a=0.5')); ylabel('X(t)'); xlabel('T(sec)');  
+title(strcat(part,stepName,' X_δ(t) conv \phi(t), for a=0.5')); ylabel('X(t)'); xlabel('T(sec)');  
 if ~DEBUG ; saveas(f,strcat(dirpath, '/', part, stepName, extraInfo, ext)) ; end 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -80,7 +79,7 @@ f=figure();
 p1 = plot(t_Xd_conv_phi_rev, Z_t, 'b') ; hold on;
 p2 = stem([0:N-1]*T, X,'r') ; hold off;
 legend([p1,p2],'Z(t)', 'X_k'); legend('Location','NorthEast'); grid on;
-title(strcat(part,stepName,' X(t) ** \phi(-t), for a=0.5 and X_k')); ylabel('Z(t)'); xlabel('T(sec)');  
+title(strcat(part,stepName,' X(t) conv \phi(-t), for a=0.5 and X_k')); ylabel('Z(t)'); xlabel('T(sec)');  
 if ~DEBUG ; saveas(f,strcat(dirpath, '/', part, stepName, extraInfo, ext)) ; end 
 
 
