@@ -21,6 +21,39 @@ valueStyles = ['o' 's' '+' '*' 'd' '.' 'x' ];
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% C.1
+% C
 %
 % Init mantatory variables
+T = 0.1 ; over = 10 ; a = 0.5 ; A = 5 ; 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% C.1
+N = 100;
+b=(sign(randn(N, 1)) + 1)/2;
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% C.2.a
+X = bits_to_2PAM(b);
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% C.2.b
+Ts=T/over ; 
+X_delta = 1/Ts * upsample(X, over);
+t = [ 0 : Ts : (N*over-1)*Ts ];
+stepName = '2.b X_δ(t)'; extraInfo = ''; 
+f=figure();
+stem(t, X_delta);
+title(strcat(part,stepName)); ylabel('X_δ(t)'); xlabel('t(sec)'); 
+if ~DEBUG ; saveas(f,strcat(dirpath, '/', part, stepName, extraInfo, ext)) ; end 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% C.2.c
+
+
+
+
+
+
+
+
+
