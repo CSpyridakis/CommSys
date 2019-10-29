@@ -37,7 +37,7 @@ f=figure();
     % Plot each srrc with a color and save plot to add extra info later  
     plot(t, phi_t(i,:), colors(i),'DisplayName',strcat('a=',num2str(a(i)))) ; hold on ; 
   end
-  hold off ; axis=([-0.04 0.04 -4 15]) ;  % TODO: Check axis on matlab
+  hold off ; axis([-0.04 0.04 -4 15]) ;
 
   % Add more info to plots                                           
   legend('Location','NorthEast');  grid on;
