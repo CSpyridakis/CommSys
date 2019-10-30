@@ -3,12 +3,11 @@
 %
 %   Authors : Spyridakis Christos
 %   Created Date : 26/10/2019
-%   Last Updated : 28/10/2019
+%   Last Updated : 30/10/2019
 %
 %   Description: 
 %               Code created for Exercises of Communication Systems Course
-%               in Tecnhical Unoversity of Crete
-%
+%               in Tecnhical University of Crete
 % ---------------------------------------------------------------------------------
 
 clear all ; close all ; clc ;
@@ -19,8 +18,7 @@ DEBUG = true ; part = 'A.' ;dirpath = '../doc/photos' ; ext = '.jpg' ; if ~DEBUG
 colors = ['r' 'g' 'b' 'c' 'm' 'y' 'k'] ;
 valueStyles = ['o' 's' '+' '*' 'd' '.' 'x' ];
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % A.1
 %
 % Init mantatory variables
@@ -44,11 +42,11 @@ f=figure();
   title(strcat(part,stepName)); ylabel('\phi(t)'); xlabel('T(sec)');  
 if ~DEBUG ; saveas(f,strcat(dirpath, '/', part, stepName, extraInfo, ext)) ; end 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % A.2
 %
 % Init mantatory variable 
-stepName = '2 Fourier Transform Φ(F)';
+stepName = '2 Fourier Transform phi(F)';
 Phi_F1 = [] ; Phi_F2 = [];
 
 % Calculate frequency vectors
@@ -78,9 +76,7 @@ f=figure();  extraInfo='-Plots';
   p3 = plot(F_2, abs(Phi_F2(3,:)).^2); hold off;
   legend([p1,p2,p3],'a=0', 'a=0.5', 'a=1'); legend('Location','NorthEast'); grid on;
   title('A.2.a Spectral energy density Nf=2048'); ylabel('|\Phi(F)|^2'); xlabel('F(Hz)');
-  
 if ~DEBUG ; saveas(f,strcat(dirpath, '/', part, stepName, extraInfo, ext)) ; end
-
 
 % Semilogy 
 f=figure(); extraInfo='-Semilogy';
@@ -98,12 +94,9 @@ f=figure(); extraInfo='-Semilogy';
   p3 = semilogy(F_2, abs(Phi_F2(3,:)).^2); hold off;
   legend([p1, p2, p3],'a=0', 'a=0.5', 'a=1'); legend('Location','NorthEast'); grid on;
   title('A.2.b Spectral energy density Nf=2048'); ylabel('|\Phi(F)|^2 in log'); xlabel('F(Hz)');
-  
-%  sgtitle(strcat(part, stepName, extraInfo)) ; %  suptitle(strcat(part, stepName, extraInfo));  %TODO
 if ~DEBUG ; saveas(f,strcat(dirpath, '/', part, stepName, extraInfo, ext)) ; end
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % A.3
 %
 % Init mantatory variable 
@@ -136,4 +129,3 @@ f=figure();
   legend([p1, p2, p3, p4, p5],'a=0', 'a=0.5', 'a=1' , 'C=T/10^3', 'C=T/10^5'); legend('Location','NorthEast'); grid off;
   title('A.3 Spectral Energy Density  Nf=2048'); ylabel('|\Phi(F)|^2 in log'); xlabel('F(Hz)');
 if ~DEBUG ; saveas(f,strcat(dirpath, '/', part, stepName, extraInfo, ext)) ; end
-
