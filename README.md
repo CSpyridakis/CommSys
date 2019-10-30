@@ -8,4 +8,4 @@ In the [first lab](./Lab-1/)  we have to create SRRC pulses for different values
 
 If you want more information, you could read (or just try to read, unfortunately at this point is only in greek language) the following report: [Report 1](./Lab-1/doc/Communication_Systems_1_Exercise_1.pdf)
 
-[Sourse files](./Lab-1/src/) created in Matlab.
+[Source files](./Lab-1/src/) created in Matlab.
