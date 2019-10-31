@@ -89,7 +89,7 @@ for i=1:length(a)
     phi_t_za=[phi_t(i,:) zeros(1,k*over)];         % phi(t) (with zeros added)
     phi_kt_za=[zeros(1,k*over) phi_t(i,:)];        % phi(t-kT) (with zeros added)
   
-    integrals=[integrals sprintf('a=%.1f, k=%d, integral=%f\n',a(i),k,sum(phi_t_za.*phi_kt_za)*Ts)];
+    integrals=[integrals sprintf('a=%.1f, k=%d, integral=%.4f\n',a(i),k,sum(phi_t_za.*phi_kt_za)*Ts)];
   end
 end
 disp('Integrals') ; disp(integrals)

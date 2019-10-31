@@ -283,9 +283,9 @@ end
     \begin{center}
         \begin{tabular}{c|c|c|c}
             \backslashbox{a}{k} & 0 & 2 & 4 \\ \hline
-            0   & 0.974749 & -0.034885 & -0.095912 \\ \hline
-            0.5 & 0.999876 & 0.000333  & 0.000735  \\ \hline
-            1   & 0.999969 & -0.000082 & -0.000159 \\
+            0   & 0.9798 & -0.0258 & -0.0402 \\ \hline
+            0.5 & 0.9999 & 0.0002  & -0.0009 \\ \hline
+            1   & 1.0000 & -0.0000 & -0.0001 \\
         \end{tabular}
     \end{center}
     
@@ -300,7 +300,7 @@ for i=1:length(a)
     phi_t_za=[phi_t(i,:) zeros(1,k*over)];         % phi(t) (with zeros added)
     phi_kt_za=[zeros(1,k*over) phi_t(i,:)];        % phi(t-kT) (with zeros added)
   
-    integrals=[integrals sprintf('a=%.1f, k=%d, integral=%f\n',a(i),k,sum(phi_t_za.*phi_kt_za)*Ts)];
+    integrals=[integrals sprintf('a=%.1f, k=%d, integral=%.4f\n',a(i),k,sum(phi_t_za.*phi_kt_za)*Ts)];
   end
 end
 \end{lstlisting}
@@ -649,7 +649,7 @@ for i=1:length(a)
     phi_t_za=[phi_t(i,:) zeros(1,k*over)];         % phi(t) (with zeros added)
     phi_kt_za=[zeros(1,k*over) phi_t(i,:)];        % phi(t-kT) (with zeros added)
   
-    integrals=[integrals sprintf('a=%.1f, k=%d, integral=%f\n',a(i),k,sum(phi_t_za.*phi_kt_za)*Ts)];
+    integrals=[integrals sprintf('a=%.1f, k=%d, integral=%.4f\n',a(i),k,sum(phi_t_za.*phi_kt_za)*Ts)];
   end
 end
 disp('Integrals') ; disp(integrals)
