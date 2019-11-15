@@ -3,7 +3,7 @@
 %
 %   Authors : Spyridakis Christos
 %   Created Date : 12/11/2019
-%   Last Updated : 14/11/2019
+%   Last Updated : 15/11/2019
 %
 %   Description: 
 %               Code created for Exercises of Communication Systems Course
@@ -18,6 +18,7 @@ DEBUG = true ; part = 'A.' ;dirpath = '../doc/photos' ; ext = '.jpg' ; if ~DEBUG
 colors = ['r' 'g' 'b' 'c' 'm' 'y' 'k'] ;
 valueStyles = ['o' 's' '+' '*' 'd' '.' 'x' ];
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % A.1
 %
@@ -25,13 +26,13 @@ valueStyles = ['o' 's' '+' '*' 'd' '.' 'x' ];
 stepName = '1 Spectral energy density'; extraInfo='';
 T=10^-3 ; over=10 ; Ts=T/over ; A=4 ; a=0.5 ; Nf = 4096 ; Fs = 1/Ts ; 
 
-f=figure(); 
-    [phi_t, t_phi] = srrc_pulse(T, Ts, A, a);       % Create SRRC pulse              
-    F_Phi = [-Fs/2 : Fs/Nf : Fs/2-Fs/Nf];           % Frequency vector
-    Phi_F = fftshift(fft(phi_t,Nf)*Ts) ;            % Fourier Transform of phi(t)
-    
-    semilogy(F_Phi, abs(Phi_F).^2); grid on;        % Display Spectral energy density of phi(t)
-    title(strcat(part, stepName, ' Nf=2048 (Semilogy)')); ylabel('|\Phi(F)|^2'); xlabel('F(Hz)');
+[phi_t, t_phi] = srrc_pulse(T, Ts, A, a);           % Create SRRC pulse  
+[Phi_F, F_Phi] = fourier_transform(phi_t, Ts, Nf);
+
+% Display Spectral energy density of phi(t)
+f=figure();
+semilogy(F_Phi, abs(Phi_F).^2); grid on;       
+title(strcat(part, stepName, ' Nf= ',num2str(Nf),' (Semilogy)')); ylabel('|\Phi(F)|^2'); xlabel('F(Hz)');
 if ~DEBUG ; saveas(f,strcat(dirpath, '/', part, stepName, extraInfo, ext)) ; end
 
 
@@ -41,111 +42,54 @@ if ~DEBUG ; saveas(f,strcat(dirpath, '/', part, stepName, extraInfo, ext)) ; end
 % Init mantatory variables
 stepName = '2'; extraInfo='';
 N=100 ; 
-
+    
+% Calculate X_t
+[Xt, t_Xt, Sx_F] = create_xt('A.2', N, 2, phi_t, t_phi, Phi_F, Ts, T, over, 'T');  
+    
+% Display signal
 f=figure();
-    b=(sign(randn(N, 1)) + 1)/2;                        % Create bit stream
-    Xn = bits_to_2PAM(b);                               % Bits to symbols
-
-    % Calculate upsampled signal X_delta
-    X_delta = 1/Ts * upsample(Xn, over);                
-    t_delta = [ 0 : Ts : (N*over-1)*Ts ];
-    
-    % Calculate X_t, which is the convolution of phi(t) and X_delta
-    Xt = conv(X_delta, phi_t).*Ts;
-    t_Xt = [t_delta(1) + t_phi(1) : Ts : t_delta(end) + t_phi(end)];
-    
-    % Display signal
-    plot(t_Xt, Xt, 'b') ; grid on;
-    title([strcat(part, stepName, ' X(t) = $\sum_{n=0}^{N-1}X_n\phi(t-nT)$')],'Interpreter','latex'); ylabel('X(t)'); xlabel('T(sec)');  
+plot(t_Xt, Xt, 'b') ; grid on;
+title([strcat(part, stepName, ' X(t) = $\sum_{n=0}^{N-1}X_n\phi(t-nT)$')],'Interpreter','latex'); ylabel('X(t)'); xlabel('T(sec)');  
 if ~DEBUG ; saveas(f,strcat(dirpath, '/', part, stepName, extraInfo, ext)) ; end 
 
-Sx_F = (var(Xt)/T).*(abs(Phi_F).^2);                      % Theoretical Power Spectrum
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% A.3.a
+% A.3.a and A.3.b
 %
 % Init mantatory variables
 stepName = '3.a Periodogram'; extraInfo='_Plot_and_Semilogy';
- 
-f=figure();
-    Ttotal = length(t_Xt)*Ts;                             % Ttotal is total time of X(t) in sec
-    Px_F = (abs(fftshift(fft(Xt,Nf)*Ts)).^2)./Ttotal;     % Px(F) = (|F[X(t)]|^2)/(Ttotal)
-    F_Px = [-Fs/2 : Fs/Nf : Fs/2-Fs/Nf];                  % Frequency vector
-    
-    % Display signal
-    subplot(2,1,1);    % Plot
-    plot(F_Px, Px_F, 'b') ; grid on;
-    title(strcat(part,stepName, ' - Plot')); ylabel('P_x(F)'); xlabel('F(Hz)'); 
-    subplot(2,1,2);     % Semilogy
-    semilogy(F_Px, Px_F, 'b') ; grid on;
-    title(strcat(part,stepName, ' - Semilogy')); ylabel('P_x(F)'); xlabel('F(Hz)'); 
-if ~DEBUG ; saveas(f,strcat(dirpath, '/', part, stepName, extraInfo, ext)) ; end 
-
+K=100;
+SDP_theoretical_experimental('A.3.a', 'A.3.b', 2, T, Ts, A, a, Nf, N, K, over)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% A.3.b
+% A.3.c
 %
-% Init mantatory variables
-K = 1000 ;   
-stepName = '3.b '; extraInfo='';
- 
-f=figure();
-    
-    % Calculate experimental 
-    for i = 1:K                                            
-        % Create again bits, create symbols etc...  \see A.2 for more info
-        b = (sign(randn(N, 1)) + 1)/2;                   
-        Xn = bits_to_2PAM(b);                      
-        X_delta = 1/Ts * upsample(Xn, over);                
-        Xt = conv(X_delta, phi_t).*Ts;
-        Px_experiments(i,:) = (abs(fftshift(fft(Xt,Nf).*Ts)).^2)./Ttotal;
+for Ni = [100 500 1000] 
+    for Ki = [100 500 1000]
+        SDP_theoretical_experimental('', 'A.3.c', 2, T, Ts, A, a, Nf, Ni, Ki, over)
     end
-    
-    Px_F_experimental = mean(Px_experiments);            % Experimental
-    Px_F_theoritical = Sx_F;                        	 % Theoritical
-    
-    p1 = semilogy(F_Px, Px_F_experimental, 'b') ; hold on;
-    p2 = semilogy(F_Px, Px_F_theoritical, 'r') ; hold off;
-    legend([p1, p2],'Experimental', 'Theoritical'); legend('Location','NorthEast'); grid on;
-    title(strcat(part,stepName)); ylabel('P_x(F)'); xlabel('F(Hz)');
-if ~DEBUG ; saveas(f,strcat(dirpath, '/', part, stepName, extraInfo, ext)) ; end 
-
+end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % A.4.a
 %
-% Init mantatory variables
 stepName = '4'; extraInfo='';
 
-f=figure();
-    b=(sign(randn(N, 1)) + 1)/2;                        % Create bit stream
-    Xn = bits_to_4PAM(b);                               % Bits to symbols
-
-    % Calculate upsampled signal X_delta
-     X_delta = 1/Ts * upsample(Xn, over);                
-     t_delta = [ 0 : Ts : ((N/2)*over-1)*Ts ];
-     
-     % Calculate X_t, which is the convolution of phi(t) and X_delta
-     t_Xt = [t_delta(1) + t_phi(1) : Ts : t_delta(end) + t_phi(end)];
-     Xt = conv(X_delta, phi_t).*Ts;
-     
-     % Display signal
-%     plot(t_Xt, Xt, 'b') ; grid on;
-%     title([strcat(part, stepName, ' X(t) = $\sum_{n=0}^{N-1}X_n\phi(t-nT)$')],'Interpreter','latex'); ylabel('X(t)'); xlabel('T(sec)');  
-if ~DEBUG ; saveas(f,strcat(dirpath, '/', part, stepName, extraInfo, ext)) ; end 
-
+SDP_theoretical_experimental('A.4.a', 'A.4.a', 4, T, Ts, A, a, Nf, N, K, over)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% A.4.b
+% A.5.a -> A.3.a + A.3.b 
 %
-% Init mantatory variables
+SDP_theoretical_experimental('A.5.a', 'A.5.a', 4, 2*T, Ts, A, a, Nf, N, K, 2*over)
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% A.5
+%%%%%%%%%
+% A.5.a -> A.3.c
 %
-% Init mantatory variables
-
-
+for Ni = [100 500 1000]
+    for Ki = [100 500 1000]
+        SDP_theoretical_experimental('', 'A.5.c', 4, 2*T, Ts, A, a, Nf, Ni, Ki, 2*over)
+    end
+end
 
 
 
