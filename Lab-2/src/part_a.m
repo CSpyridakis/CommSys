@@ -80,14 +80,14 @@ SDP_theoretical_experimental('A.4.a', 'A.4.a', 4, T, Ts, A, a, Nf, N, K, over)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % A.5.a -> A.3.a + A.3.b 
 %
-SDP_theoretical_experimental('A.5.a', 'A.5.a', 4, 2*T, Ts, A, a, Nf, N, K, 2*over)
+SDP_theoretical_experimental('A.5.a', 'A.5.a', 2, 2*T, Ts, A, a, Nf, N, K, 2*over)
 
 %%%%%%%%%
 % A.5.a -> A.3.c
 %
 for Ni = [100 500 1000]
     for Ki = [100 500 1000]
-        SDP_theoretical_experimental('', 'A.5.c', 4, 2*T, Ts, A, a, Nf, Ni, Ki, 2*over)
+        SDP_theoretical_experimental('', 'A.5.c', 2, 2*T, Ts, A, a, Nf, Ni, Ki, 2*over)
     end
 end
 
