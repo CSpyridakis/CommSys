@@ -3,7 +3,7 @@
 This repository contains code and reports files of Labs implemented for a <i>Communication Systems</i> Course at the Technical University of Crete. During this course, 3 Labs were carried out with specific learning objectives for each.
 
 ### Learning objectives
-#### [Lab 1](./Lab-1)
+#### Lab 1
 In the [first lab](./Lab-1/),  we have to create SRRC pulses for different values of roll-off factor a, create Fourier Transform for each case and based on that calculate the Theoretical and Practical Bandwidth. Then, prove the Nyquist ISI criterion for SRRC pulses. Finally, create a basic 2-PAM Communication System without Noise existence.
 
 ### Documentation
