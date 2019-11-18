@@ -3,7 +3,7 @@
 %
 %   Authors : Spyridakis Christos
 %   Created Date : 12/11/2019
-%   Last Updated : 15/11/2019
+%   Last Updated : 18/11/2019
 %
 %   Description: 
 %               Code created for Exercises of Communication Systems Course
@@ -59,37 +59,37 @@ if ~DEBUG ; saveas(f,strcat(dirpath, '/', part, stepName, extraInfo, ext)) ; end
 % Init mantatory variables
 stepName = '3.a Periodogram'; extraInfo='_Plot_and_Semilogy';
 K=100;
-SDP_theoretical_experimental('A.3.a', 'A.3.b', 2, T, Ts, A, a, Nf, N, K, over)
+display_periodogram_PSD_theoretical_experimental('A.3.a', 'A.3.b', 2, T, Ts, A, a, Nf, N, K, over)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % A.3.c
 %
-for Ni = [100 500 1000] 
-    for Ki = [100 500 1000]
-        SDP_theoretical_experimental('', 'A.3.c', 2, T, Ts, A, a, Nf, Ni, Ki, over)
-    end
-end
+% for Ni = [100 500 1000] 
+%     for Ki = [100 500 1000]
+%         display_periodogram_PSD_theoretical_experimental('', 'A.3.c', 2, T, Ts, A, a, Nf, Ni, Ki, over)
+%     end
+% end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % A.4.a
 %
 stepName = '4'; extraInfo='';
 
-SDP_theoretical_experimental('A.4.a', 'A.4.a', 4, T, Ts, A, a, Nf, N, K, over)
+display_periodogram_PSD_theoretical_experimental('A.4.a', 'A.4.a', 4, T, Ts, A, a, Nf, N, K, over)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % A.5.a -> A.3.a + A.3.b 
 %
-SDP_theoretical_experimental('A.5.a', 'A.5.a', 2, 2*T, Ts, A, a, Nf, N, K, 2*over)
+display_periodogram_PSD_theoretical_experimental('A.5.a', 'A.5.a', 2, 2*T, Ts, A, a, Nf, N, K, 2*over)
 
 %%%%%%%%%
 % A.5.a -> A.3.c
 %
-for Ni = [100 500 1000]
-    for Ki = [100 500 1000]
-        SDP_theoretical_experimental('', 'A.5.c', 2, 2*T, Ts, A, a, Nf, Ni, Ki, 2*over)
-    end
-end
+% for Ni = [100 500 1000]
+%     for Ki = [100 500 1000]
+%         display_periodogram_PSD_theoretical_experimental('', 'A.5.c', 2, 2*T, Ts, A, a, Nf, Ni, Ki, 2*over)
+%     end
+% end
 
 
 

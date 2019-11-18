@@ -1,4 +1,4 @@
-function [Xt, t_Xt, T_SPD] = create_xt(part, N, PAM, phi_t, t_phi, Phi_F, Ts, T, over, DEBUG)
+function [Xt, t_Xt, T_PSD] = create_xt(part, N, PAM, phi_t, t_phi, Phi_F, Ts, T, over, DEBUG)
     
     % Create bits
     b=(sign(randn(N, 1)) + 1)/2; 
@@ -12,7 +12,7 @@ function [Xt, t_Xt, T_SPD] = create_xt(part, N, PAM, phi_t, t_phi, Phi_F, Ts, T,
         X_delta = 1/Ts * upsample(Xn, over);                % Create upsampled X_delta signal            
         t_delta = [ 0 : Ts : ((N/2)*over-1)*Ts ];
     else
-        disp('Illegal value of roll-off factor')
+        disp('Not supported value of N-PAM encoding')
         return
     end
     
@@ -23,12 +23,12 @@ function [Xt, t_Xt, T_SPD] = create_xt(part, N, PAM, phi_t, t_phi, Phi_F, Ts, T,
     % Only for debug display signals
     if (DEBUG == 'T'); figure(); subplot(3,1,1); stem([1:N],b,'b'); grid on; title(strcat(part, ' Bits, Symbols and X(t) (',num2str(PAM),'-PAM)')); ylabel('bits'); xlabel('n');if(PAM == 2);subplot(3,1,2) ; stem([1:N],Xn,'r'); grid on;ylabel('Xn'); elseif (PAM == 4);subplot(3,1,2) ; stem([1:N/2],Xn,'r'); grid on;ylabel('Xn'); end;subplot(3,1,3); plot(t_Xt,Xt); grid on;ylabel('X(t)'); xlabel('t');end
     
-    % Calculate theoretical SPD
+    % Calculate theoretical PSD
     if (PAM == 2)
         var_Xn = ((-1)^2+(1)^2)./2;
-        T_SPD = (var_Xn/T).*(abs(Phi_F).^2);
+        T_PSD = (var_Xn/T).*(abs(Phi_F).^2);
     elseif(PAM == 4)
         var_Xn = ((-3)^2 + (-1)^2 + (1)^2 + (3)^2)./4;
-        T_SPD = (var_Xn/T).*(abs(Phi_F).^2);
+        T_PSD = (var_Xn/T).*(abs(Phi_F).^2);
     end
 end
