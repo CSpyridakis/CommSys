@@ -20,4 +20,3 @@ function [ Xout ] = bits_to_4PAM( X )
         end
     end
 end
-

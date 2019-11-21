@@ -64,11 +64,11 @@ display_periodogram_PSD_theoretical_experimental('A.3.a', 'A.3.b', 2, T, Ts, A, 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % A.3.c
 %
-for Ni = [5 10 30 50 100] 
-    for Ki = [5 10 30 50 100]
-        display_periodogram_PSD_theoretical_experimental('', 'A.3.c', 2, T, Ts, A, a, Nf, Ni, Ki, over)
-    end
-end
+% for Ni = [5 10 30 50 100] 
+%     for Ki = [5 10 30 50 100]
+%         display_periodogram_PSD_theoretical_experimental('', 'A.3.c', 2, T, Ts, A, a, Nf, Ni, Ki, over)
+%     end
+% end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % A.4.a
@@ -90,35 +90,3 @@ display_periodogram_PSD_theoretical_experimental('A.5.a', 'A.5.a', 2, 2*T, Ts, A
 %         display_periodogram_PSD_theoretical_experimental('', 'A.5.c', 2, 2*T, Ts, A, a, Nf, Ni, Ki, 2*over)
 %     end
 % end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -116,7 +116,7 @@
     %-------------------------------------------------------------------------
     %   Eisagwgi
     \section*{Εισαγωγή}
-    Για την διευκόλυνση της υλοποίησης είναι καλό να σημειωθεί ότι το κάθε μέρος (Α και Β4) υλοποιήθηκε σε διαφορετικό script, αυτό είχε τα θετικά του, στο να είναι περισσότερο διακριτός ο κώδικας για ανάπτυξη και αποσφαλμάτωση, αλλά χρειάστηκε να ξανά δημιουργηθούν σήματα που είχαν δημιουργηθεί σε προηγούμενα ερωτήματα. Δεν επηρεάζονται κάπως τα αποτελέσματα απλά είναι μία διευκρίνηση σχετικά με την δομή που δόθηκε στον κώδικα. 
+    Για την διευκόλυνση της υλοποίησης είναι καλό να σημειωθεί ότι το κάθε μέρος υλοποιήθηκε σε διαφορετικό script, αυτό είχε τα θετικά του, στο να είναι περισσότερο διακριτός ο κώδικας για ανάπτυξη και αποσφαλμάτωση, αλλά χρειάστηκε να ξανά δημιουργηθούν σήματα που είχαν δημιουργηθεί σε προηγούμενα ερωτήματα. Δεν επηρεάζονται κάπως τα αποτελέσματα απλά είναι μία διευκρίνηση σχετικά με την δομή που δόθηκε στον κώδικα. 
     \par \noindent
     Επίσης παρατηρήθηκε ότι κατά την διάρκεια της άσκησης είναι πολλά πράγματα τα οποία μοιάζουν μεταξύ των ζητουμένων. Ακολουθήθηκε λοιπόν μία τακτική δομημένου προγραμματισμού με χρήση συναρτήσεων, προκειμένου ενέργειες που ζητούνται από περισσότερο του ενός σημεία, να μην επαναλαμβάνονται από το μηδέν. Για αυτό το λόγο υπάρχουν πολλαπλά βοηθητικά αρχεία τα οποία δημιουργήθηκαν. Σε κάθε ενότητα όπως χρειάζεται θα εισαγάγεται η λειτουργικότητα της κάθε συνάρτησης που περιέχεται σε ένα αρχείο και στην συνέχεια θα δείχνεται μόνο ο τρόπος κλήσης της. Τα αρχεία τα οποία υπάρχουν συνολικά για την ολοκληρωμένη εκτέλεση της άσκησης είναι τα εξής: \emph{\texttt{srrc\_pulses.m}}, \emph{\texttt{part\_a.m}}, \emph{\texttt{part\_b.m}}, \emph{\texttt{bits\_to\_2PAM.m}}, \emph{\texttt{bits\_to\_4PAM.m}}, \emph{\texttt{create\_xt.m}}, \emph{\texttt{fourier\_transform.m}}, \emph{\texttt{periodogram.m}}, \emph{\texttt{display\_periodogram\_PSD\_theoretical\_experimental.m}}.
     \par \noindent
@@ -481,12 +481,12 @@ end
     Το πρώτο το είδαμε παραπάνω οπότε ελέγχουμε την $R_{xx}(t+\tau,t)$ ως προς τη περιοδικότητα.
     
     \begin{align}
-        R_{xx}(t+\tau,t) =& \mathcal{E}[X(t+\tau)X(t)] \nonumber \\
-        =& \mathcal{E}\left[ \sum_{n=-\infty}^{\infty} X_n \phi(t+\tau-nT) \sum_{n=-\infty}^{\infty} X_n \phi(t-nT) \right] \nonumber \\
-        =& \mathcal{E}\left[\sum_{n=-\infty}^{\infty} \sum_{n=-\infty}^{\infty} X_n^2 \phi(t+\tau-nT) \phi(t-nT)  \right] \nonumber \\
-        =& \mathcal{E}\left[\ X_n^2 \right] \sum_{n=-\infty}^{\infty} \phi(t+\tau-nT) \phi(t-nT) \nonumber \\
+        R_{xx}(t+\tau,t) &= \mathcal{E}[X(t+\tau)X(t)] \nonumber \\
+        &= \mathcal{E}\left[ \sum_{n=-\infty}^{\infty} X_n \phi(t+\tau-nT) \sum_{n=-\infty}^{\infty} X_n \phi(t-nT) \right] \nonumber \\
+        &= \mathcal{E}\left[\sum_{n=-\infty}^{\infty} \sum_{n=-\infty}^{\infty} X_n^2 \phi(t+\tau-nT) \phi(t-nT)  \right] \nonumber \\
+        &= \mathcal{E}\left[\ X_n^2 \right] \sum_{n=-\infty}^{\infty} \phi(t+\tau-nT) \phi(t-nT) \nonumber \\
         &\overset{given}{=} \boxed{ σ_χ^2 \sum_{n=-\infty}^{\infty} \phi(t+\tau-nT) \phi(t-nT)}  \Rightarrow \mbox{ κυκλοστάσιμη } \forall \mbox{ T} \label{R-xx} \\ 
-        =& R_{xx}(t+\tau+T,t+T) \nonumber
+        &= R_{xx}(t+\tau+T,t+T) \nonumber
     \end{align}
     
     \begin{align}
@@ -535,17 +535,262 @@ end
     Επίσης έχουμε $S_y(F) = \mathcal{F}\{\bar{R}_{y}(t)\} $. Άρα:
     \begin{align*}
         S_y(f_0) &= \mathcal{F}\{\bar{R}_{y}(t)\} = \mathcal{F}\{\frac{1}{2}\bar{R}_{x}(t) \cos(2\pi f_0\tau)\} \\
-        &\overset{(\ref{fourier-property})}{=} \frac{1}{4} \left( S_x(F+f_0)  + S_x(F-f_0) \right)
+        &\overset{(\ref{fourier-property})}{=} \boxed{\frac{1}{4} \left[ S_x(F+f_0)  + S_x(F-f_0) \right]}
     \end{align*}
     
     \par \noindent
     Λογικό αποτέλεσμα καθώς το σήμα πολλαπλασιάζεται με περιοδικό σήμα το οποίο προκαλεί μετατόπιση βάση της συχνότητας $f_o$ και με trade-off το πλάτος του.
+    
+    %-------------------------------------
+    %   B.4 subsection
+    \subsection*{B.4}
+    
+    
 %---------------------------------------------------------------------------------------------------------------
 %
 %   Codes
 %
 %
 \newpage
+
+\emph{Code:} \\
+\rule{\linewidth}{0.3mm} \\[0.1cm]
+%---------------------
+\begin{lstlisting}[caption = {\texttt{bits\_to\_2PAM.m}}]
+function [ Xo ] = bits_to_2PAM( Xi )
+    Xo=zeros(1,length(Xi));    
+    for i=1:length(Xi)    
+        if(Xi(i)>0)          
+            Xo(i)=-1;        
+        else
+            Xo(i)=1;    
+        end
+    end
+end
+\end{lstlisting}
+
+%---------------------
+\begin{lstlisting}[caption = {\texttt{bits\_to\_4PAM.m}}]
+function [ Xout ] = bits_to_4PAM( X )
+    if(mod(length(X),2)==1)
+        Xout=[0];
+    else
+        i=1;
+        while i<=length(X)
+            b1=X(i);b2=X(i+1);
+ 
+            if(b1==0 && b2==0)
+               temp(i)=3; 
+            elseif(b1==0 && b2==1)
+               temp(i)=1;
+            elseif(b1==1 && b2==1)
+               temp(i)=-1; 
+            elseif(b1==1 && b2==0)
+               temp(i)=-3;      
+            end
+            i=i+2;
+            Xout=temp(temp~=0);
+        end
+    end
+end
+\end{lstlisting}
+\begin{lstlisting}[caption = {\texttt{fourier\_transform.m}}]
+function [X_F, F_X] = fourier_transform(Xt, Ts, Nf)
+    Fs = 1/Ts;
+    X_F = fftshift(fft(Xt,Nf)*Ts);
+    F_X = [-Fs/2 : Fs/Nf : Fs/2-Fs/Nf];
+end
+\end{lstlisting}
+
+%---------------------
+\begin{lstlisting}[caption = {\texttt{periodogram.m}}]
+function [Px_F, F_Px] = periodogram(Xt, t_Xt, Ts, Nf)
+    Ttotal = length(t_Xt)*Ts;
+    [X_F, F_Px] = fourier_transform(Xt, Ts, Nf);
+    Px_F = (abs(X_F).^2)./Ttotal;
+end
+\end{lstlisting}
+
+
+
+%---------------------
+\begin{lstlisting}[caption = {\texttt{create\_xt.m}}]
+function [Xt, t_Xt, T_PSD] = create_xt(part, N, PAM, phi_t, t_phi, Phi_F, Ts, T, over, DEBUG)
+    
+    % Create bits
+    b=(sign(randn(N, 1)) + 1)/2; 
+
+    if (PAM == 2)
+        Xn = bits_to_2PAM(b);                               % Create symbols 
+        X_delta = 1/Ts * upsample(Xn, over);                % Create upsampled X_delta signal              
+        t_delta = [ 0 : Ts : (N*over-1)*Ts ];
+    elseif (PAM == 4)
+        Xn = bits_to_4PAM(b);                               % Create symbols
+        X_delta = 1/Ts * upsample(Xn, over);                % Create upsampled X_delta signal            
+        t_delta = [ 0 : Ts : ((N/2)*over-1)*Ts ];
+    else
+        disp('Not supported value of N-PAM encoding')
+        return
+    end
+    
+    % Calculate X_t, which is the convolution of phi(t) and X_delta
+    Xt = conv(X_delta, phi_t).*Ts;
+    t_Xt = [t_delta(1) + t_phi(1) : Ts : t_delta(end) + t_phi(end)];
+    
+    % Only for debug display signals
+    if (DEBUG == 'T'); figure(); subplot(3,1,1); stem([1:N],b,'b'); grid on; title(strcat(part, ' Bits, Symbols and X(t) (',num2str(PAM),'-PAM)')); ylabel('bits'); xlabel('n');if(PAM == 2);subplot(3,1,2) ; stem([1:N],Xn,'r'); grid on;ylabel('Xn'); elseif (PAM == 4);subplot(3,1,2) ; stem([1:N/2],Xn,'r'); grid on;ylabel('Xn'); end;subplot(3,1,3); plot(t_Xt,Xt); grid on;ylabel('X(t)'); xlabel('t');end
+    
+    % Calculate theoretical PSD
+    if (PAM == 2)
+        var_Xn = ((-1)^2+(1)^2)./2;
+        T_PSD = (var_Xn/T).*(abs(Phi_F).^2);
+    elseif(PAM == 4)
+        var_Xn = ((-3)^2 + (-1)^2 + (1)^2 + (3)^2)./4;
+        T_PSD = (var_Xn/T).*(abs(Phi_F).^2);
+    end
+end
+\end{lstlisting}
+
+%---------------------
+\begin{lstlisting}[caption = {\texttt{display\_periodogram\_PSD\_theoretical\_experimental.m}}]
+function [periodogram_figure, theoretical_practical_PSD_figure] = display_periodogram_PSD_theoretical_experimental(partA, partB, PAM, T, Ts, A, a, Nf, N, K, over)
+    
+    [phi_t, t_phi] = srrc_pulse(T, Ts, A, a);           % Create SRRC pulse  
+    [Phi_F, F_Phi] = fourier_transform(phi_t, Ts, Nf);
+    if (~isempty(partA)) ; DEBUG='T' ; else DEBUG='F' ; end;
+    [Xt, t_Xt, Sx_F] = create_xt(partA, N, PAM, phi_t, t_phi, Phi_F, Ts, T, over, DEBUG);
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Create periodogram and calculate theoretical PSD (Power Spectral Density)
+    [Px_F, F_Px] = periodogram(Xt, t_Xt, Ts, Nf);
+    
+    % Display signal
+    if (~isempty(partA)); 
+        periodogram_figure = figure();
+        subplot(2,1,1); plot(F_Px, Px_F, 'b') ; grid on; title(strcat(partA,' Periodogram', ' - Plot (', num2str(PAM),'-PAM)')); ylabel('P_x(F)'); xlabel('F(Hz)'); 
+        subplot(2,1,2); semilogy(F_Px, Px_F, 'b') ; grid on; title(strcat(partA,' Periodogram', ' - Semilogy (', num2str(PAM),'-PAM)')); ylabel('P_x(F)'); xlabel('F(Hz)'); 
+    end;
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Compute Experimental PSD to compare it with theoretical
+    for i = 1:K                                            
+        [Xt, t_Xt] = create_xt('', N, PAM, phi_t, t_phi, Phi_F, Ts, T, over, 'F');
+        Px_experiments(i,:) = periodogram(Xt, t_Xt, Ts, Nf);
+    end
+    
+    Px_F_experimental = mean(Px_experiments);            % Experimental
+    Px_F_theoritical = Sx_F;                        	 % Theoretical
+    
+    % Display signals
+    if (~isempty(partB)); 
+        theoretical_practical_PSD_figure = figure();
+        p1 = semilogy(F_Px, Px_F_experimental, 'b') ; hold on;
+        p2 = semilogy(F_Px, Px_F_theoritical, 'r') ; hold off;
+        legend([p1, p2],'Experimental', 'Theoretical'); legend('Location','NorthEast'); grid on; title([partB,' Theoretical-Experimental PSD ', num2str(PAM), '-PAM (K= ', num2str(K), ', N= ', num2str(N), ')']); ylabel('P_x(F)'); xlabel('F(Hz)');
+    end
+end
+\end{lstlisting}
+
+%---------------------
+\begin{lstlisting}[caption = {\texttt{part\_a.m}}]
+% ---------------------------------------------------------------------------------
+%   Exercise 2, part A
+%
+%   Authors : Spyridakis Christos
+%   Created Date : 12/11/2019
+%   Last Updated : 18/11/2019
+%
+%   Description: 
+%               Code created for Exercises of Communication Systems Course
+%               in Tecnhical University of Crete
+% ---------------------------------------------------------------------------------
+
+clear all ; close all ; clc ;
+
+% Just for saving in a separate folder figures as images
+DEBUG = true ; part = 'A.' ;dirpath = '../doc/photos' ; ext = '.jpg' ; if ~DEBUG && ~exist(dirpath,'dir') ; mkdir(dirpath); end
+% Auxiliary variables for plots, semilogy, etc...
+colors = ['r' 'g' 'b' 'c' 'm' 'y' 'k'] ;
+valueStyles = ['o' 's' '+' '*' 'd' '.' 'x' ];
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% A.1
+%
+% Init mantatory variables
+stepName = '1 Spectral energy density'; extraInfo='';
+T=10^-3 ; over=10 ; Ts=T/over ; A=4 ; a=0.5 ; Nf = 4096 ; Fs = 1/Ts ; 
+
+[phi_t, t_phi] = srrc_pulse(T, Ts, A, a);           % Create SRRC pulse  
+[Phi_F, F_Phi] = fourier_transform(phi_t, Ts, Nf);
+
+% Display Spectral energy density of phi(t)
+f=figure();
+semilogy(F_Phi, abs(Phi_F).^2); grid on;       
+title(strcat(part, stepName, ' Nf= ',num2str(Nf),' (Semilogy)')); ylabel('|\Phi(F)|^2'); xlabel('F(Hz)');
+if ~DEBUG ; saveas(f,strcat(dirpath, '/', part, stepName, extraInfo, ext)) ; end
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% A.2
+%
+% Init mantatory variables
+stepName = '2'; extraInfo='';
+N=100 ; 
+    
+% Calculate X_t
+[Xt, t_Xt, Sx_F] = create_xt('A.2', N, 2, phi_t, t_phi, Phi_F, Ts, T, over, 'T');  
+    
+% Display signal
+f=figure();
+plot(t_Xt, Xt, 'b') ; grid on;
+title([strcat(part, stepName, ' X(t) = $\sum_{n=0}^{N-1}X_n\phi(t-nT)$')],'Interpreter','latex'); ylabel('X(t)'); xlabel('T(sec)');  
+if ~DEBUG ; saveas(f,strcat(dirpath, '/', part, stepName, extraInfo, ext)) ; end 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% A.3.a and A.3.b
+%
+% Init mantatory variables
+stepName = '3.a Periodogram'; extraInfo='_Plot_and_Semilogy';
+K=100;
+display_periodogram_PSD_theoretical_experimental('A.3.a', 'A.3.b', 2, T, Ts, A, a, Nf, N, K, over)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% A.3.c
+%
+for Ni = [5 10 30 50 100] 
+    for Ki = [5 10 30 50 100]
+        display_periodogram_PSD_theoretical_experimental('', 'A.3.c', 2, T, Ts, A, a, Nf, Ni, Ki, over)
+    end
+end
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% A.4.a
+%
+stepName = '4'; extraInfo='';
+
+display_periodogram_PSD_theoretical_experimental('A.4.a', 'A.4.a', 4, T, Ts, A, a, Nf, N, K, over)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% A.5.a -> A.3.a + A.3.b 
+%
+display_periodogram_PSD_theoretical_experimental('A.5.a', 'A.5.a', 2, 2*T, Ts, A, a, Nf, N, K, 2*over)
+
+%%%%%%%%%
+% A.5.a -> A.3.c
+%
+for Ni = [5 10 30 50 100] 
+     for Ki = [5 10 30 50 100]
+         display_periodogram_PSD_theoretical_experimental('', 'A.5.c', 2, 2*T, Ts, A, a, Nf, Ni, Ki, 2*over)
+     end
+end
+\end{lstlisting}
+
+%---------------------
+\begin{lstlisting}[caption = {\texttt{part\_b.m}}]
+
+\end{lstlisting}
 
 
 \end{document}
