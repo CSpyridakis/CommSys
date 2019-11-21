@@ -131,7 +131,7 @@
     %-------------------------------------
     %   A.1 subsection
     \subsection*{A.1 Create SRRC pulse}
-    Πρώτο ζητούμενο της συγκεκριμένης άσκησης είναι να δημιουργηθεί ξανά με την χρήση του script που μας δόθηκε - \emph{\texttt{srrc\_pulses.m}} - ένας αποκομμένος παλμούς Square Root Raised Cosine φ(t). Έπειτα να υπολογίσουμε τον Fourier Transform αυτού και να εμφανίσουμε σε κατάλληλο άξονα την φασματική πυκνότητα ενέργειας του σε ημι-λογαριθμική (semilogy) κλίμακα. Είσοδος της συνάρτησης είναι η περίοδος συμβόλων T, η περίοδος δειγματοληψίας Ts, ο θετικός αριθμός Α και το roll-off factor a. Όπου η περίοδος δειγματοληψίας υπολογίζεται ως το πηλίκο $\frac{T}{over}$, με over ως το συντελεστή υπερδειγματοληψίας. Στην περίπτωση μας για τα δεδομένα της εκφώνησης είχαμε $T = {10^{−3}}$ sec, $over = 10$, $A = 4$ και $a = 0.5$. Παρόλο που δεν είναι μία περίπλοκη διαδικασία, αλλά επειδή χρησιμοποιείται και σε άλλα σημεία, δημιουργήθηκε η συνάρτηση \emph{\texttt{fourier\_transform.m}}. Το μόνο που κάνει είναι ουσιαστικά να της δίνεται ένα σήμα στο πεδίο του χρόνου μαζί με τις όποιες ακόμα απαραίτητες παραμέτρους, και ακριβώς με τον ίδιο τρόπο που αναφέρθηκε και στη πρώτη άσκηση να επιστρέφει το μετασχηματισμένο σήμα καθώς και το πεδίο συχνοτήτων. Τέλος να αναφερθεί ότι καθόλη την διάρκεια της άσκησης το $N_f$ εχει την τιμή 4096 ώστε να μην υπάρξει πιθανότητα παραμόρφωσης και για τα μεγαλύτερα N και over της συνέχειας. 
+    Πρώτο ζητούμενο της συγκεκριμένης άσκησης είναι να δημιουργηθεί ξανά με την χρήση του script που μας δόθηκε - \emph{\texttt{srrc\_pulses.m}} - ένας αποκομμένος παλμός Square Root Raised Cosine φ(t). Έπειτα να υπολογίσουμε τον Fourier Transform αυτού και να εμφανίσουμε σε κατάλληλο άξονα την φασματική πυκνότητα ενέργειας του σε ημι-λογαριθμική (semilogy) κλίμακα. Είσοδος της συνάρτησης είναι η περίοδος συμβόλων T, η περίοδος δειγματοληψίας Ts, ο θετικός αριθμός Α και το roll-off factor a. Όπου η περίοδος δειγματοληψίας υπολογίζεται ως το πηλίκο $\frac{T}{over}$, με over ως το συντελεστή υπερδειγματοληψίας. Στην περίπτωση μας για τα δεδομένα της εκφώνησης είχαμε $T = {10^{−3}}$ sec, $over = 10$, $A = 4$ και $a = 0.5$. Παρόλο που δεν είναι μία περίπλοκη διαδικασία, αλλά επειδή χρησιμοποιείται και σε άλλα σημεία, δημιουργήθηκε η συνάρτηση \emph{\texttt{fourier\_transform.m}}. Το μόνο που κάνει είναι ουσιαστικά να της δίνεται ένα σήμα στο πεδίο του χρόνου μαζί με τις όποιες ακόμα απαραίτητες παραμέτρους, και ακριβώς με τον ίδιο τρόπο που αναφέρθηκε και στη πρώτη άσκηση να επιστρέφει το μετασχηματισμένο σήμα καθώς και το πεδίο συχνοτήτων. Τέλος να αναφερθεί ότι καθόλη την διάρκεια της άσκησης το $N_f$ εχει την τιμή 4096 ώστε να μην υπάρξει πιθανότητα παραμόρφωσης και για τα μεγαλύτερα N και over της συνέχειας. 
     
     \begin{lstlisting}[caption = {\emph{\texttt{fourier\_transform.m}}}]
 function [X_F, F_X] = fourier_transform(Xt, Ts, Nf)
@@ -143,8 +143,8 @@ end
     
     \begin{figure}[H]
         \centering
-        \includegraphics[scale=0.5, width=\textwidth]{photos/A.1 Spectral energy density.png} \\
-        % \caption{A.1 Spectral }
+        \includegraphics[scale=0.5, width=0.8\textwidth]{figures/A1-SED.png} \\
+        \caption{A.1 Spectral Energy Density of \phi(t)}
     \end{figure}
     
     \begin{lstlisting}[caption = {A.1 Create SRRC pulse and display SED}]
@@ -160,14 +160,14 @@ f=figure(); semilogy(F_Phi, abs(Phi_F).^2); grid on;
     %-------------------------------------
     %   A.2 subsection
     \subsection*{A.2 Create X(t) and calculate SDP}
-    Όπως και για τον Fourier Transform παραπάνω, έτσι και για την δημιουργία του $X(t)$ υλοποιήθηκε μία συνάρτηση η οποία θα το δημιουργεί ακριβώς με τον τρόπο που αναφέρθηκε αναλυτικά στην πρώτη άσκηση. Από την στιγμή που στην συνέχεια της υλοποίησης χρησιμοποιείται και κωδικοποίηση 4-PAM συνυπολογίζεται και αυτό στις παραμέτρους εισόδου της, ώστε να δημιουργεί κατάλληλα την $X(t)$ και για αυτή την περίπτωση. 
+    Όπως και για τον Fourier Transform παραπάνω, έτσι και για την δημιουργία του $X(t)$ υλοποιήθηκε μία συνάρτηση η οποία θα το δημιουργεί ακριβώς με τον τρόπο που αναφέρθηκε αναλυτικά στην πρώτη άσκηση. Από την στιγμή που στην συνέχεια της υλοποίησης χρησιμοποιείται και symbol mapping 4-PAM συνυπολογίζεται και αυτό στις παραμέτρους εισόδου της, ώστε να δημιουργεί κατάλληλα την $X(t)$ και για αυτή την περίπτωση. 
     Συγκεκριμένα αυτό που κάνει, είναι αρχικά να δημιουργεί την τυχαία ακολουθία από bit. 
-    Έπειτα ανάλογα με την κωδικοποίηση που επιλέχθηκε να δημιουργεί τα σύμβολα $X_n$. Για τον υπολογισμό του $X(t)$ ουσιαστικά όπως είδαμε και στην πρώτη άσκηση πρέπει να υπολογίσουμε την συνέλιξη με το υπερδειγματοληπτημένο σήμα $X_{\delta}$.
+    Έπειτα ανάλογα με το symbol mapping που επιλέχθηκε να δημιουργεί τα σύμβολα $X_n$. Για τον υπολογισμό του $X(t)$ ουσιαστικά όπως είδαμε και στην πρώτη άσκηση πρέπει να υπολογίσουμε την συνέλιξη με το υπερδειγματοληπτημένο σήμα $X_{\delta}$.
     Άρα ισχύει ότι $X(t) = \sum_{n=0}^{N-1}X_n\phi(t-nT) = X_δ (t) \circledast  φ(t)$. 
-    Ενώ για να μπορέσουμε να καλύψουμε στην συνέχεια και της απαιτήσεις του ερωτήματος Α.5 στο οποίο αλλάζουμε τις τιμές της περιόδου συμβόλου T και της τιμής του over, συμπεριλαμβάνονται και αυτά ως ορίσματα εισόδου της συνάρτησης.
-    Σημαντικό σημείο είναι επίσης να προσέξουμε στο διάστημα χρόνου για το $X_{\delta}$ μέχρι που θα εκτείνεται ο χρόνος, πράγμα το οποίο εξαρτάται από τον αριθμό των συμβόλων. 
+    Ενώ για να μπορέσουμε να καλύψουμε στην συνέχεια και τις απαιτήσεις του ερωτήματος Α.5 στο οποίο αλλάζουμε τις τιμές της περιόδου συμβόλου T και της τιμής του over, συμπεριλαμβάνονται και αυτά ως ορίσματα εισόδου της συνάρτησης.
+    Σημαντικό σημείο είναι επίσης να προσέξουμε το διάστημα χρόνου για το $X_{\delta}$ μέχρι που θα εκτείνεται ο χρόνος, πράγμα το οποίο εξαρτάται από τον αριθμό των συμβόλων. 
     Τελευταίο πράγμα που υπολογίζει αυτή η συνάρτηση είναι η θεωρητική φασματική πυκνότητα ισχύος του σήματος που μόλις δημιουργήσαμε και θα χρησιμοποιηθεί στην συνέχεια ως μέτρο σύγκρισης με τα πειράματα. 
-    Ο τρόπος με τον οποίο υπολογίζεται είναι με τον τύπο που εμφανίζεται και στην εκφώνηση $S_x(F)=\frac{σ_χ^2}{T}|\Phi{F}|^2$, προσέχοντας ότι το $σ_χ^2$ μπορούμε να το υπολογίσουμε είτε αμέσως ανάλογα με την κωδικοποίηση - πράγμα που επιλέχθηκε αφού είναι θεωρητική προσέγγιση - είτε να χρησιμοποιήσουμε την συνάρτηση var έχοντας τα ίδια αποτελέσματα.
+    Ο τρόπος με τον οποίο υπολογίζεται είναι με τον τύπο που εμφανίζεται και στην εκφώνηση $S_x(F)=\frac{σ_χ^2}{T}|\Phi{F}|^2$, προσέχοντας ότι το $σ_χ^2$ μπορούμε να το υπολογίσουμε είτε αμέσως ανάλογα με το symbol mapping (2-PAM: $σ_χ^2=\frac{(-1)^2+(1)^2}{2}$, 4-PAM: $σ_χ^2=\frac{(-3)^2+(-1)^2+(1)^2+(3)^2)}{4}$) - πράγμα που επιλέχθηκε αφού είναι θεωρητική προσέγγιση - είτε να χρησιμοποιήσουμε την συνάρτηση var έχοντας τα ίδια αποτελέσματα.
     Χρησιμοποιώντας λοιπόν αυτήν την συνάρτηση μπορούμε να δημιουργήσουμε πολλαπλά $X(t)$ σήματα πολύ εύκολα και γρήγορα.
     Για την \emph{\texttt{bits\_to\_2PAM.m}} αναφέρθηκε στην πρώτη άσκηση η υλοποίηση της, ενώ για την \emph{\texttt{bits\_to\_4PAM.m}} θα δοθεί στο ερώτημα Α.4.
     
@@ -206,7 +206,7 @@ end
     \end{lstlisting}
     
     \par \noindent
-    Έχοντας αναφέρει τα παραπάνω μπορούμε πλέον πολύ εύκολα για τις ανάγκες του ερωτήματος να δημιου- ργήσουμε την συνάρτηση $X(t)$ για $Ν=100$ και με χρήση $2-PAM$ κωδικοποίησης, με τον παρακάτω τρόπο:
+    Έχοντας αναφέρει τα παραπάνω μπορούμε πλέον πολύ εύκολα για τις ανάγκες του ερωτήματος να δημιου- ργήσουμε την συνάρτηση $X(t)$ για $Ν=100$ και με χρήση $2-PAM$ symbol mapping, με τον παρακάτω τρόπο:
     
     \begin{lstlisting}[caption = {\texttt{Α.2 Create X(t)}}]
 N=100 ; PAM = 2 ;
@@ -214,12 +214,12 @@ N=100 ; PAM = 2 ;
     \end{lstlisting}
     
     \par \noindent
-    Ενώ υπάρχει ένα ακόμα χωρίο κώδικα μέσα στην συνάρτηση το οποίο εάν είναι ενεργοποιημένο το DEBUG mode (με το πέρασμα της τιμής 'Τ' για την παράμετρο DEBUG) να μας εμφανίσει κατάλληλα τα δημιουργημένα σήματα. 
+    Να σημειωθεί ότι υπάρχει ένα ακόμα χωρίο κώδικα μέσα στην συνάρτηση το οποίο εάν είναι ενεργοποιημένο το DEBUG mode (με το πέρασμα της τιμής `Τ' για την παράμετρο DEBUG) να μας εμφανίσει κατάλληλα τα δημιουργημένα σήματα (την ακολουθία bits, τα σύμβολα Xn και το σήμα X(t)). 
     
     \begin{figure}[H]
         \centering
-        \includegraphics[scale=0.5, width=\textwidth]{photos/A.2 Bits_symbols_Xt_2-PAM.png} \\
-        \caption{A.2 Display bit, Xn and X(t) - 2-PAM}
+        \includegraphics[scale=0.5, width=\textwidth]{figures/A2-b_Xn_Xt.png} \\
+        \caption{A.2 Display bits, Xn and X(t) - 2-PAM}
     \end{figure}
     
     
@@ -248,7 +248,7 @@ end
     Σαν αποτέλεσμα μετά από αυτήν την διαδικασία θα έχουμε τόσο την θεωρητική φασματική πυκνότητα ισχύος όσο και την πειραματική.  
     Να ξανά γίνει αναφορά ότι παρόλο που μέσα σε αυτήν την συνάρτηση εμφανίζονται τα ζητούμενα σήματα ΜΟΝΟ όταν ζητείται το καθένα (γίνονται κάποιοι έλεγχοι σχετικά με ορίσματα \emph{\texttt{partA}} για το περιοδόγραμμα και \emph{\texttt{partΒ}} για το PSD, αν είναι κενό το εκάστοτε πεδίο τότε δεν εμφανίζεται το ανάλογο σήμα) αυτό δεν εμφανίζεται εδώ - υπάρχει στο τέλος όμως - ώστε να δοθεί προσοχή μόνο στους υπολογισμούς.
     \par \noindent
-    \textbf{Σημείωση:} Από την στιγμή που αναφέρεται να δοθεί το περιοδόγραμμα μίας υλοποίησης της $X(t)$ και όχι να είναι η ίδια κατά μήκος των ερωτημάτων δεν μας πειράζει που δημιουργούνται από την αρχή σε κάθε ερώτημα.
+    \textbf{Σημείωση:} Από την στιγμή που αναφέρεται να δοθεί το περιοδόγραμμα μίας υλοποίησης της $X(t)$ και όχι να είναι η ίδια κατά μήκος των `συ-σχετιζόμενων' ερωτημάτων δεν μας πειράζει που δημιουργούνται από την αρχή σε κάθε ερώτημα με διαφορετικά bit καθώς θεωρείται ότι αναλύεται από την θεωρητική όψη.
     
     % Είναι σημαντικό να ξανά σημειωθεί ότι κομμάτια σχετικά με την εμφάνιση των σημάτων δεν εμφανίζονται εδώ, αλλά πρέπει να αναφερθεί ότι τα ορίσματα \emph{\texttt{partA}} και \emph{\texttt{partB}} συσχετίζονται με την εμφάνιση του periogram και του PSD και αν ένα από τα δύο είναι άδειο αυτό σημαίνει ότι δεν χρειαζόμαστε να εμφανίσουμε διάγραμμα για αυτό. 
     
@@ -278,8 +278,8 @@ end
     \begin{lstlisting}[caption = {A.3 Periodogram - theoretical and practical PSD}]
 K=100; PAM = 2;
 display_periodogram_PSD_theoretical_experimental('A.3.a', 'A.3.b', PAM, T, Ts, A, a, Nf, N, K, over)
-for Ni = [100 500 1000] 
-    for Ki = [100 500 1000]
+for Ni = [5 10 30 50 100] 
+    for Ki = [5 10 30 50 100]
         display_periodogram_PSD_theoretical_experimental('', 'A.3.c', PAM, T, Ts, A, a, Nf, Ni, Ki, over)
     end
 end
@@ -287,18 +287,21 @@ end
     
       \begin{figure}[H]
         \centering
-        \includegraphics[scale=0.5, width=0.8\textwidth]{photos/A.3.a Periodogram - 2PAM_plot-semilogy.png} \\
+        \includegraphics[scale=0.5, width=0.8\textwidth]{figures/A3.1-Periodogram.png} \\
         \caption{A.3.a Περιοδόγραμμα μίας υλοποίησης X(t) (2-PAM) σε plot και semilogy}
     \end{figure}
     
       \begin{figure}[H]
         \centering
-        \includegraphics[scale=0.5, width=0.8\textwidth]{photos/A.3.b - SDP 2-PAM_K-100_N-100.png} \\
+        \includegraphics[scale=0.5, width=0.8\textwidth]{figures/A3.2-T_E_PSD.png} \\
         \caption{A.3.b Πειραματική και Θεωρητική φασματική πυκνότητα ισχύος σε κοινό semilogy}
     \end{figure}
     
     \par \noindent
-    Δεν δίνονται figures για το τρίτο υπο-ερώτημα αλλά αυτό που μπορούμε να παρατηρήσουμε όσο αυξάνεται το 
+    Δεν δίνονται figures για το τρίτο υπο-ερώτημα στο οποίο επαναλαμβάνουμε το πείραμα για διαφορετικές τιμές Ν και Κ αλλά αυτό που μπορούμε να παρατηρήσουμε είναι ότι.
+    Καθώς αυξάνεται το Ν το αποτέλεσμα τείνει να ταυτιστεί με το θεωρητικό, ενώ όσο αυξάνεται το Κ τόσο καλύτερη γίνεται και η προσέγγιση.
+    Ο λόγος είναι ότι όντας το περιοδόγραμμα ένα στιγμιότυπο της PSD μετά από ένα αριθμό επαναλήψεων είναι αρκετά κοντά να συνθέσει την ιδανική και θεωρητική PSD.
+    Μετά όμως από ένα σημείο τιμών δεν παρατηρούνται περισσότερες αλλαγές.
     
     %-------------------------------------
     %   A.4 subsection
@@ -342,25 +345,27 @@ display_periodogram_PSD_theoretical_experimental('A.4.a', 'A.4.a', PAM, T, Ts, A
     
     \begin{figure}[H]
         \centering
-        \includegraphics[scale=0.5, width=0.8\textwidth]{photos/A.4 - create Xt 4-PAM.png} \\
+        \includegraphics[scale=0.5, width=0.8\textwidth]{figures/A4.0-b_Xn_Xt.png} \\
         \caption{A.4 Display bit, Xn and X(t) - 4-PAM}
     \end{figure}
     
     \begin{figure}[H]
         \centering
-        \includegraphics[scale=0.5, width=0.8\textwidth]{photos/A.4.a Periodogram 4-PAM.png} \\
+        \includegraphics[scale=0.5, width=0.8\textwidth]{figures/A4.1-Periodogram.png} \\
         \caption{A.4.a Περιοδόγραμμα μίας υλοποίησης X(t) (4-PAM) σε plot και semilogy}
     \end{figure}
     
       \begin{figure}[H]
         \centering
-        \includegraphics[scale=0.5, width=0.8\textwidth]{photos/A.4.a SDP 4-PAM_K-100_N-100.png} \\
+        \includegraphics[scale=0.5, width=0.8\textwidth]{figures/A4.1-T_E_PSD.png} \\
         \caption{A.4.a Πειραματική και Θεωρητική φασματική πυκνότητα ισχύος σε κοινό semilogy}
     \end{figure}
     
     
     \par \noindent
-    Σχετικά με το δεύτερο υπό-ερώτημα αυτό που πα
+    Σχετικά με το δεύτερο υπό-ερώτημα αυτό που μπορούμε να παρατηρήσουμε είναι ότι και στις δύο περιπτώσεις (με χρήση 2-PAM vs 4-PAM) το εύρος φάσματος της PSD τους είναι το ίδιο.
+    Πράγμα λογικό καθώς το θεωρητικό εύρος φάσματος των παλμών άπειρης διάρκειας είναι $BW=\frac{1+a}{2T}$, άρα δεν θα έπρεπε να διαφέρει.
+    Δεν μπορούμε όμως να πούμε ότι ισχύει αυτό και για το μέγιστο πλάτος των PSD, καθώς η 4-PAM έχει μεγαλύτερο πλάτος πράγμα το οποίο συμβαίνει λόγο του symbol mapping της.
     
     
     
@@ -375,8 +380,8 @@ display_periodogram_PSD_theoretical_experimental('A.4.a', 'A.4.a', PAM, T, Ts, A
 PAM=2;
 display_periodogram_PSD_theoretical_experimental('A.5.a', 'A.5.a', PAM, 2*T, Ts, A, a, Nf, N, K, 2*over)
 
-for Ni = [100 500 1000]
-    for Ki = [100 500 1000]
+for Ni = [5 10 30 50 100] 
+    for Ki = [5 10 30 50 100]
         display_periodogram_PSD_theoretical_experimental('', 'A.5.c', PAM, 2*T, Ts, A, a, Nf, Ni, Ki, 2*over)
     end
 end
@@ -384,19 +389,20 @@ end
     
       \begin{figure}[H]
         \centering
-        \includegraphics[scale=0.5, width=0.85\textwidth]{photos/A.5.a Periodogram 2-PAM.png} \\
+        \includegraphics[scale=0.5, width=0.85\textwidth]{figures/A5.1-Periodogram.png} \\
         \caption{A.5.a T'=2T - Περιοδόγραμμα μίας υλοποίησης X(t) (2-PAM) σε plot και semilogy}
     \end{figure}
     
       \begin{figure}[H]
         \centering
-        \includegraphics[scale=0.5, width=0.85\textwidth]{photos/A.5.c - SDP 2-PAM_K-100_N-100.png} \\
+        \includegraphics[scale=0.5, width=0.85\textwidth]{figures/A5.1-T_E_PSD.png} \\
         \caption{A.5.a T'=2T - Πειραματική και Θεωρητική φασματική πυκνότητα ισχύος σε κοινό semilogy}
     \end{figure}
     
     
     \par \noindent
-    Συμπεράσματα:
+    Σε αντίθεση με το Α.4, σε αυτό το ερώτημα αν συγκρίνουμε το εύρος φάσματος της PSD του Α.3 ερωτήματος με του Α.5 θα δούμε ότι διαφέρουν. 
+    Συγκεκριμένα στο Α.5 παρατηρούμε ότι υπάρχει υπο-διπλασιασμός του εύρους φάσματος το οποίο όπως αναφέραμε παραπάνω είναι λογικό καθώς το θεωρητικό εύρος φάσματος των παλμών άπειρης διάρκειας είναι $BW=\frac{1+a}{2T}$. Άρα για διπλάσια περίοδο συμβόλου Τ με σταθερό α, θα έχουμε υπο-διπλασιασμό του Bandwidth.
     
     %-------------------------------------
     %   A.6 subsection
@@ -411,7 +417,7 @@ end
     
     \par \noindent
     b) Αν είχαμε να επιλέξουμε περίοδο συμβόλου μεταξύ μίας υλοποίησης με Τ και μίας άλλης με Τ'=2Τ σε ένα πολύ ακριβό εύρος φάσματος, αυτό που θα επιλέγαμε είναι το Τ'. 
-    Ο λόγος είναι - και τα σχεδιαγράμματα από τα ερωτήματα Α.3 και Α.5 το επαληθεύουν - ότι για διπλάσιο Τ το bandwidth περιορίζεται στο μισό, αυξάνοντας παράλληλα και την απαιτούμενη ενέργεια επιτυχούς μετάδοσης.
+    Ο λόγος είναι - και τα σχεδιαγράμματα από τα ερωτήματα Α.3 και Α.5 το επαληθεύουν - ότι για διπλάσιο Τ το Bandwidth περιορίζεται στο μισό, αυξάνοντας παράλληλα και την απαιτούμενη ενέργεια επιτυχούς μετάδοσης.
     
     
     
@@ -423,12 +429,12 @@ end
     \[ X(t) = \sum_{n=-\infty}^{\infty} Xn\phi(t-nT) \]
     
     \par \noindent
-    Όπου $\mathcal{E}[X_n]=0, \mathcal{E}[X_n^2]=\sigma_x^2$ και $T>0$. Επιπλέον έχουμε το διαμορφωμένο σήμα $Y(t) = X(t)\cos(2 \pi f_o + \Theta)$, όπου Θ τυχαία μεταβλητή ομοιόμορφα κατανεμημένη στο $[0,2\pi)$ ανεξάρτητη των $X_n$ για κάθε n.
+    Όπου $\mathcal{E}[X_n]=0, \mathcal{E}[X_n^2]=\sigma_x^2$ και $T>0$. Επιπλέον έχουμε το διαμορφωμένο σήμα $Y(t) = X(t)\cos(2 \pi f_o + \Theta)$, όπου Θ τυχαία μεταβλητή ομοιόμορφα κατανεμημένη στο $[0,2\pi)$ ανεξάρτητη των $X_n$ για κάθε n. Επίσης ΣΠΠ της Θ:
     
     \[  
-        F_{\Theta}(\Theta) = \left\{ 
+        F_{\Theta}(\theta) = \left\{ 
                     \begin{array}{rcl}
-                        \frac{1}{2\pi}, & 0 \leq \Theta \leq 2\pi \\ 
+                        \frac{1}{2\pi}, & 0 \leq \theta \leq 2\pi \\ 
                         0,  & \text{αλλού}
                     \end{array}
                 \right.
@@ -438,77 +444,102 @@ end
     %   B.1 subsection
     \subsection*{B.1}
     α)
-    \begin{align*}
-        \mathcal{E}[Y(t)] &= \mathcal{E}[X(t)\cos(2 \pi f_o + \Theta)] = \mathcal{E}[X(t)] \mathcal{E}[\cos(2 \pi f_o + \Theta)] \\
-        &= \mathcal{E}[X(t)] \int_{-\infty}^{\infty} \cos (2\pi f_o t + \Theta) F_{\Theta}(\Theta)d\theta \\
-        &= \mathcal{E}[X(t)] \int_{-\infty}^{\infty} \cos (2\pi f_o t + \Theta) \frac{1}{2\pi} d\theta \\
-        &= \frac{1}{2\pi}  \mathcal{E}[X(t)] \int_{0}^{2\pi} \cancelto{0}{\cos (2\pi f_o t + \Theta) d\theta} \\
-    \end{align*}
-    
-    \par \noindent
-    \[\text{Άρα\space} \boxed{${E}[Y(t)] = 0$ \text{\spaceσταθερή}}\]
+    \begin{align}
+        \mathcal{E}[Y(t)] &= \mathcal{E}[X(t)\cos(2 \pi f_o + \Theta)] \overset{indep.}{=} \mathcal{E}[X(t)] \mathcal{E}[\cos(2 \pi f_o + \Theta)] \nonumber \\
+        &= \mathcal{E}[X(t)] \int_{-\infty}^{\infty} \cos (2\pi f_o t + \Theta) F_{\Theta}(\Theta)d\theta \nonumber \\
+        &= \mathcal{E}[X(t)] \int_{0}^{2\pi} \cos (2\pi f_o t + \Theta) \frac{1}{2\pi} d\theta \nonumber \\
+        &= \frac{1}{2\pi}  \mathcal{E}[X(t)] \int_{0}^{2\pi} \cancelto{0}{\cos (2\pi f_o t + \Theta) d\theta} \nonumber \\
+        &= \boxed{0} \text{, \spaceΆρα σταθερή}
+    \end{align}
     
     \par \noindent
     %----------------------
     β) Γνωρίζοντας την παρακάτω σχέση:
     \begin{align}
-        \cos a \cos b = \frac{1}{2}[\cos(a+b) \ + \cos(a-b)]
+        \cos a \cos b = \frac{1}{2}[\cos(a+b) \ + \cos(a-b)] \label{cosa-cosb}
     \end{align}
     
-    \par \noindent
-    
-    \begin{align*}
-        \mathcal{E}[Y(t+\tau)Y(t)] = R_{yy}(t+\tau,t) =& \mathcal{E} [X( t + \tau) \cos(2 \pi f_0 (t + \tau) + \Theta) X(t) \cos(2 \pi f_0 t + \Theta)] \\
-        \overset{indep.}{=}& \mathcal{E}[X(t+\tau)X(t)] \mathcal{E}[\cos(2\pi f_0(t+\tau) +\Theta)\cos(2\pi f_0t + \Theta)] \\
-        \overset{(1)}{=}& \mathcal{E}[X(t+\tau)X(t)]\frac{1}{2}\mathcal{E}[\cancelto{0}{\cos(4\pi f_0t+2\pi f_0\tau+2\Theta)} + \cos(2\pi f_0\tau)] \\
-        =& \mathcal{E}[X(t+\tau)X(t)] \cos(2\pi f_0\tau) \\ 
+    \begin{align}
+        \mathcal{E}[Y(t+\tau)Y(t)] = R_{yy}(t+\tau,t) =& \mathcal{E} [X( t + \tau) \cos(2 \pi f_0 (t + \tau) + \Theta) X(t) \cos(2 \pi f_0 t + \Theta)] \nonumber \\
+        \overset{indep.}{=}& \mathcal{E}[X(t+\tau)X(t)] \mathcal{E}[\cos(2\pi f_0(t+\tau) +\Theta)\cos(2\pi f_0t + \Theta)] \nonumber \\
+        \overset{(\ref{cosa-cosb})}{=}& \mathcal{E}[X(t+\tau)X(t)]\frac{1}{2}\mathcal{E}[\cancelto{0}{\cos(4\pi f_0t+2\pi f_0\tau+2\Theta)} + \cos(2\pi f_0\tau)] \nonumber \\
+        =& \frac{1}{2} \mathcal{E}[X(t+\tau)X(t)] \cos(2\pi f_0\tau) \nonumber \\ 
         =& \boxed{ \frac{1}{2} R_{xx}(t+\tau,t)\cos(2\pi f_0\tau)}
-    \end{align*}
+    \end{align}
     
     %-------------------------------------
     %   B.2 subsection
     \subsection*{B.2}
-    Ελέγχουμε την $R_{xx}(t+\tau,t)$ ως προς τη περιοδικότητα.
+    Μία στοχαστική διαδικασία Y(t) καλείται κυκλοστάσιμη υπό την ευρεία έννοια με περίοδο T αν:
     
-    \begin{align*}
-        R_{xx}(t+\tau,t) =& \mathcal{E}[X(t+\tau)X(t)] \\
-        =& \mathcal{E}\left[\sum_{n=-\infty}^{\infty} X_n \phi(t-nT)\sum_{n=-\infty}^{\infty} X_n \phi(t+\tau-nT) \right] \\
-        =& \mathcal{E}\left[\sum_{n=-\infty}^{\infty} \sum_{n=-\infty}^{\infty} X_n^2 \phi(t-nT) \phi(t+\tau-nT) \right] \\
-        =& \mathcal{E}\left[\ X_n^2 \right] \sum_{n=-\infty}^{\infty}  \phi(t-nT) \phi(t+\tau-nT) \Rightarrow \mbox{ κυκλοστάσιμη } \forall \mbox{ T} \\
-        =& R_{xx}(t+\tau+T,t+T)
-    \end{align*}
+    \begin{enumerate}
+      \item $m_Y (t) = m_Y (t + T )$, \space $\forall t \in \mathbb{R}$
+      \item $R_{YY} (t + τ, t) = R_{YY} (t + T + τ, t + T )$, \space $\forall t \in \mathbb{R}$
+    \end{enumerate}
+
+    \par \noindent
+    Το πρώτο το είδαμε παραπάνω οπότε ελέγχουμε την $R_{xx}(t+\tau,t)$ ως προς τη περιοδικότητα.
     
-    \begin{align*}
-        R_{yy}(t+\tau,t) =& R_{xx}(t+\tau+T,t+T)\cos(2\pi f_0\tau) \\
-        =& R_{yy}(t+\tau+T,t+T)
-    \end{align*}
+    \begin{align}
+        R_{xx}(t+\tau,t) =& \mathcal{E}[X(t+\tau)X(t)] \nonumber \\
+        =& \mathcal{E}\left[ \sum_{n=-\infty}^{\infty} X_n \phi(t+\tau-nT) \sum_{n=-\infty}^{\infty} X_n \phi(t-nT) \right] \nonumber \\
+        =& \mathcal{E}\left[\sum_{n=-\infty}^{\infty} \sum_{n=-\infty}^{\infty} X_n^2 \phi(t+\tau-nT) \phi(t-nT)  \right] \nonumber \\
+        =& \mathcal{E}\left[\ X_n^2 \right] \sum_{n=-\infty}^{\infty} \phi(t+\tau-nT) \phi(t-nT) \nonumber \\
+        &\overset{given}{=} \boxed{ σ_χ^2 \sum_{n=-\infty}^{\infty} \phi(t+\tau-nT) \phi(t-nT)}  \Rightarrow \mbox{ κυκλοστάσιμη } \forall \mbox{ T} \label{R-xx} \\ 
+        =& R_{xx}(t+\tau+T,t+T) \nonumber
+    \end{align}
+    
+    \begin{align}
+        \boxed{R_{yy}(t+\tau,t) = R_{xx}(t+\tau+T,t+T)\cos(2\pi f_0\tau) = R_{yy}(t+\tau+T,t+T)}
+    \end{align}
+    
     \par \noindent
     Άρα είναι περιοδική κυκλοστάστιμη υπό την ευρεία έννοια
     
     %-------------------------------------
     %   B.3 subsection
     \subsection*{B.3}
+    Αφού Υ(t) κυκλοστάσιμη, υπό την ευρεία έννοια, με περίοδο T , τότε ξέρουμε ότι ισχύουν οι παρακάτω σχέσεις:
+    
+    \begin{itemize}
+      \item $S_y(F) = \mathcal{F}\{\bar{R}_{y}(t)\} $
+      \item $\bar{R}_{y}(t) = \frac{1}{T} \int_{T} R_{yy}(t + τ, t) dt$
+    \end{itemize}
+    
+    \par \noindent
+    Για το Χ έχουμε ότι:
+    \begin{align}
+        \bar{R}_{x}(t) &= \frac{1}{T} \int_{T} R_{xx} (t + τ, t) dt \nonumber \\
+        &\overset{(\ref{R-xx})}{=} \frac{1}{T} \int_{T} σ_χ^2 \sum_{-\infty}^{\infty} \left[ \phi(t+\tau-nT) \phi(t-nT)  \right]  dt \nonumber \\
+        &= \frac{σ_χ^2}{T}  \int_{T} \sum_{-\infty}^{\infty} \left[ \phi(t+\tau-nT) \phi(t-nT)  \right]  dt \nonumber \\
+        &= \boxed{\frac{σ_χ^2}{T}  (\phi(\tau) + \phi(-\tau))} \label{Rx} 
+    \end{align}
+    
+    \par \noindent
     Μέση αυτοσυσχέτιση της Y εντός μίας περιόδου ορίζουμε ως: 
+    \begin{align}
+        \bar{R}_{y}(t) &= \frac{1}{T} \int_{T} R_{yy} (t + τ, t) dt = \frac{1}{T} \int_{T} \frac{1}{2} R_{xx}(t+\tau,t) \cos(2\pi f_0\tau) dt \nonumber \\
+        &\overset{(\ref{R-xx})}{=} \frac{1}{T} \int_{T} \frac{1}{2} σ_χ^2 \sum_{-\infty}^{\infty} \left[ \phi(t+\tau-nT) \phi(t-nT)  \right] \cos(2\pi f_0\tau) dt \nonumber \\
+        &= \frac{σ_χ^2}{2T}  \int_{T} \sum_{-\infty}^{\infty} \left[ \phi(t+\tau-nT) \phi(t-nT)  \right] \cos(2\pi f_0\tau) dt \nonumber \\
+        &= \frac{σ_χ^2}{2T} \cos(2\pi f_0\tau) (\phi(\tau) + \phi(-\tau)) \nonumber \\
+        &\overset{(\ref{Rx})}{=} \boxed{\frac{1}{2}\bar{R}_{x}(t) \cos(2\pi f_0\tau)}
+    \end{align}
     
+    \par \noindent
+    Μία από τις ιδιότητες του Fourier για μία συνάρτηση x(t) είναι η εξής:
+    \begin{align}
+        \mathcal{F}\{ x(t) \cos(2 \pi f_{o} t) \} = \frac{1}{2} \left[ X(F+f_{ο}) + X(F-f_{ο}) \right] \label{fourier-property}
+    \end{align}
+    
+    \par \noindent
+    Επίσης έχουμε $S_y(F) = \mathcal{F}\{\bar{R}_{y}(t)\} $. Άρα:
     \begin{align*}
-        R_{\bar{y}}(t) &= \frac{1}{T} \int_{T} R_{yy} \cos(2\pi f_0\tau) dt \\
-        &= \frac{1}{T} \int_{T} \frac{1}{2} σ_χ^2 \sum_{-\infty}^{\infty} \left[ \phi(t-nT) \phi(t+\tau-nT) \right] \cos(2\pi f_0\tau) dt \\
-        &= \frac{σ_χ^2}{2T}  \int_{T} \sum_{-\infty}^{\infty} \left[ \phi(t-nT) \phi(t+\tau-nT) \right] \cos(2\pi f_0\tau) dt \\
-        &= \frac{σ_χ^2}{2T} \cos(2\pi f_0\tau) \phi(\tau) + \phi(-\tau) \\
+        S_y(f_0) &= \mathcal{F}\{\bar{R}_{y}(t)\} = \mathcal{F}\{\frac{1}{2}\bar{R}_{x}(t) \cos(2\pi f_0\tau)\} \\
+        &\overset{(\ref{fourier-property})}{=} \frac{1}{4} \left( S_x(F+f_0)  + S_x(F-f_0) \right)
     \end{align*}
     
     \par \noindent
-    Επίσης έχουμε $S_y(F) = F\{R_{\bar{y}}(t)\} $
-    \par \noindent
-    Άρα:
-    \begin{align*}
-        S_y(f_0) &=F\{ \frac{σ_χ^2}{2T} \cos(2\pi f_0 \tau) \phi(\tau) + \phi(-\tau) \} \\
-        &= \frac{σ_χ^2}{2T} \frac{1}{2} \left[  \Phi(F+f_0)\Phi^*(F+f_0) + \Phi(F-f_0)\Phi^*(F-f_0) \right]\\
-        &= \frac{σ_χ^2}{4T} \left( |\Phi(F+f_0)|^2  + |\Phi(F-f_0)|^2 \right)
-    \end{align*}
-    
-    \par \noindent
-    Λογικό αποτέλεσμα καθώς το σήμα πολλαπλασιάζεται με περιοδικό σήμα το οποίο προκαλεί μετατόπιση βάση της συχνότητας $F_o$ και με trade-off το πλάτος του.
+    Λογικό αποτέλεσμα καθώς το σήμα πολλαπλασιάζεται με περιοδικό σήμα το οποίο προκαλεί μετατόπιση βάση της συχνότητας $f_o$ και με trade-off το πλάτος του.
 %---------------------------------------------------------------------------------------------------------------
 %
 %   Codes
