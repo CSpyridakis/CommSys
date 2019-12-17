@@ -1,14 +1,14 @@
-function [PAMsyms] = detect_4_PAM(data, A)
-    PAMsyms=zeros(1,length(data));
-    for i=1:length(data)
-        if((data(i) > 0 && data(i) < 1*A) || (data(i) > 1*A && data(i) < 2*A))
-            PAMsyms(i) = 1*A;
-        elseif(data(i) > 3*A || (data(i) > 2*A && data(i) < 3*A)) 
-            PAMsyms(i) = 3*A;
-        elseif((data(i) < 0 && data(i) > -1*A) || (data(i) < -1*A && data(i) > -2*A))  
-            PAMsyms(i) = -1*A;
-        elseif(data(i) < -3*A || (data(i) < -2*A && data(i) > -3*A)) 
-            PAMsyms(i) = -3*A;
+function [est_X] = detect_4_PAM(Y, A)
+    est_X=zeros(1,length(Y));
+    for i=1:length(Y)
+        if(Y(i) > 3*A || (Y(i) > 2*A && Y(i) < 3*A))
+            est_X(i) = 3*A;
+        elseif((Y(i) > 0 && Y(i) < 1*A) || (Y(i) > 1*A && Y(i) < 2*A))
+            est_X(i) = 1*A;
+        elseif((Y(i) < 0 && Y(i) > -1*A) || (Y(i) < -1*A && Y(i) > -2*A))  
+            est_X(i) = -1*A;
+        elseif(Y(i) < -3*A || (Y(i) < -2*A && Y(i) > -3*A)) 
+            est_X(i) = -3*A;
         end
     end
 end

@@ -11,7 +11,6 @@ function [ X ] = bits_to_4_PAM(bit_seq, A)
         elseif(bit_seq(i)==1 && bit_seq(i+1)==0)    % 10 -> -3
             X(k) = -3*A;
         end
-        
         k=k+1;
     end
 end
