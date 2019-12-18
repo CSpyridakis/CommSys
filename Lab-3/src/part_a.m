@@ -3,7 +3,7 @@
 %
 %   Authors : Spyridakis Christos
 %   Created Date : 15/12/2019
-%   Last Updated : 17/12/2019
+%   Last Updated : 18/12/2019
 %
 %   Description: 
 %               Code created for Exercises of Communication Systems Course
@@ -29,11 +29,11 @@ XQ_n = Xn(N+1:2*N);                % Quadrature Symbols
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % A.4
-T = 0.01 ; over = 10 ; Ts = T/over ; A2 = 4 ; a = 0.5; % TODO: Check a and A
+T = 0.01 ; over = 10 ; Ts = T/over ; A_s = 4 ; a = 0.5;   % TODO: Check a and A
 Nf = 2048 ; Fs = 1/Ts ; F = [-Fs/2 : Fs/Nf : Fs/2-Fs/Nf]; % Frequency vector
 
 % Phi
-[phi_t t_phi] = srrc_pulse(T, Ts, A2, a);
+[phi_t t_phi] = srrc_pulse(T, Ts, A_s, a);
 
 % Create upsampled X_delta signals and using it calculate conv
 XI_d = 1/Ts * upsample(XI_n, over) ; XI_t = conv(XI_d, phi_t).*Ts ;
@@ -42,33 +42,25 @@ td = [ 0 : Ts : (N*over-1)*Ts ] ; t_Xt = [td(1) + t_phi(1) : Ts : td(end) + t_ph
 
 % Plot waveforms
 figure()
-subplot(4,2,1:2) ; stem([1:N*4], bit_seq, 'b') ; title('Random Bits');
-subplot(4,2,3:4) ; stem([1:N*2], Xn, 'r') ; title('Symbols in 4PAM');
-subplot(4,2,5) ; stem([1:N], XI_n, 'r'); title('Xn of Inphase'); subplot(4,2,6) ; stem([N+1:N*2], XQ_n, 'r'); title('Xn of Quadrature'); 
-subplot(4,2,7) ; plot(t_Xt, XI_t); title('X_I (t)'); subplot(4,2,8) ; plot(t_Xt, XQ_t); title('X_Q (t)');
+subplot(4,2,1:2) ; stem([1:N*4], bit_seq, 'b') ; title('A.1 Random Bits');
+subplot(4,2,3:4) ; stem([1:N*2], Xn, 'r') ; title('A.2 Symbols in 4-PAM');
+subplot(4,2,5) ; stem([1:N], XI_n, 'r'); title('A.3 \{X_{I,n}\} - (Xn symbols of In-phase)'); subplot(4,2,6) ; stem([N+1:N*2], XQ_n, 'r'); title('A.3 \{X_{Q,n}\} - (Xn symbols of Quadrature)'); 
+subplot(4,2,7) ; plot(t_Xt, XI_t); xlim([-0.1 2.1]) ; ylim([-50 50]) ; title('A.4 X_I (t)'); subplot(4,2,8) ; plot(t_Xt, XQ_t) ; xlim([-0.1 2.1]) ; ylim([-50 50]) ; title('A.4 X_Q (t)');
 
-display_waveform_periodogram('A.4', 'X_i(t)', XI_t, 'X_q(t)', XQ_t, t_Xt, t_Xt, Ts, Nf)
+% display_waveform_periodogram('A.4', 'X_i(t)', XI_t, 'X_q(t)', XQ_t, t_Xt, t_Xt, Ts, Nf)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % A.5
 Fo = 2;
-XI_mod = 2 * XI_t .* cos(2*pi*Fo*t_Xt);
+XI_mod =  2 * XI_t .* cos(2*pi*Fo*t_Xt);
 XQ_mod = -2 * XQ_t .* sin(2*pi*Fo*t_Xt);
-
 display_waveform_periodogram('A.5', 'X_i^{mod}', XI_mod, 'X_q^{mod}', XQ_mod, t_Xt, t_Xt, Ts, Nf)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % A.6
 t_X_mod = t_Xt;
 X_mod = XI_mod + XQ_mod;
-figure() ; plot(t_X_mod, X_mod); title('X_{mod} = X_i^{mod} + X_q^{mod} - Plot');
-
-% Periodogram
-Px_F_X_mod = periodogram(X_mod, t_X_mod, Ts, Nf);
-
-figure() ; 
-subplot(2,1,1) ; plot(F, Px_F_X_mod) ; title('Periodogram - X^{mod} - Plot');
-subplot(2,1,2) ; semilogy(F, Px_F_X_mod, 'b') ; grid on; title('Periodogram - X^{mod} - Semilogy') ; xlabel('F') ; ylabel('P_x(F)');
+display_waveform_periodogram('A.6', ' X_{mod} = X_i^{mod} + X_q^{mod} - Plot', X_mod, '', [], t_X_mod, [], Ts, Nf)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % A.7
@@ -85,30 +77,26 @@ ch_sig = X_mod + WGN;
 % A.9
 ch_sig_I = ch_sig.*cos(2*pi*Fo*t_X_mod);
 ch_sig_Q = ch_sig.*(-1*sin(2*pi*Fo*t_X_mod));
-
 display_waveform_periodogram('A.9', 'Received I', ch_sig_I, 'Received Q', ch_sig_Q, t_X_mod, t_X_mod, Ts, Nf)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % A.10
 YI = conv(ch_sig_I,phi_t).*Ts;
 YQ = conv(ch_sig_Q,phi_t).*Ts;
-t_Xt_Rec = [t_X_mod(1) + t_phi(1) :Ts: t_X_mod(end) + t_phi(end)];
-
-display_waveform_periodogram('A.10', 'Received I Conv', YI, 'Received Q Conv', YQ, t_Xt_Rec, t_Xt_Rec, Ts, Nf)
+t_Xt_Rec = [t_X_mod(1) + t_phi(1) : Ts : t_X_mod(end) + t_phi(end)];
+display_waveform_periodogram('A.10', 'Filtered I (Conv)', YI, 'Filtered Q (Conv)', YQ, t_Xt_Rec, t_Xt_Rec, Ts, Nf)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % A.11
 YI_sampled = downsample(YI, over);
 YQ_sampled = downsample(YQ, over);
-
 figure() ; scatter(YI_sampled, YQ_sampled); grid on ; title('A.11 Sampled');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % A.12
 YI_est = detect_4_PAM(YI_sampled, A);
 YQ_est = detect_4_PAM(YQ_sampled, A);
-
-figure() ; scatter(YI_est, YQ_est) ; grid on; title('A.12 Estimated');
+figure() ; scatter(YI_est, YQ_est) ; grid on; title('A.12 Estimations');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % A.13
@@ -123,7 +111,7 @@ for i=1:N
     end
 end
 IQ_err = Q_err + I_err;
-disp(['Errors: ', num2str(IQ_err), ' out of ', num2str(N)]);
+disp(['A.13: SER: ', num2str(IQ_err), '/', num2str(N*2)]);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % A.14
@@ -139,9 +127,9 @@ for i=1:length(bit_seq)
         ber = ber + 1;
     end
 end
-disp(['Ber: ', num2str(ber)]); 
+disp(['A.15: BER: ', num2str(ber), '/', num2str(N*4)]); 
 
-
+% debug_PAM_bits(XI_n, XQ_n, YI_est, YQ_est, bit_seq, A, 25, '')
 
 
 
