@@ -47,7 +47,7 @@ subplot(4,2,3:4) ; stem([1:N*2], Xn, 'r') ; title('A.2 Symbols in 4-PAM');
 subplot(4,2,5) ; stem([1:N], XI_n, 'r'); title('A.3 \{X_{I,n}\} - (Xn symbols of In-phase)'); subplot(4,2,6) ; stem([N+1:N*2], XQ_n, 'r'); title('A.3 \{X_{Q,n}\} - (Xn symbols of Quadrature)'); 
 subplot(4,2,7) ; plot(t_Xt, XI_t); xlim([-0.1 2.1]) ; ylim([-50 50]) ; title('A.4 X_I (t)'); subplot(4,2,8) ; plot(t_Xt, XQ_t) ; xlim([-0.1 2.1]) ; ylim([-50 50]) ; title('A.4 X_Q (t)');
 
-% display_waveform_periodogram('A.4', 'X_i(t)', XI_t, 'X_q(t)', XQ_t, t_Xt, t_Xt, Ts, Nf)
+display_waveform_periodogram('A.4', 'X_i(t)', XI_t, 'X_q(t)', XQ_t, t_Xt, t_Xt, Ts, Nf)
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % A.5
@@ -88,26 +88,29 @@ display_waveform_periodogram('A.10', 'Filtered I (Conv)', YI, 'Filtered Q (Conv)
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % A.11
-YI_sampled = YI(2*A_s*over+1:over:2*A_s*over+1+N*over);
-YQ_sampled = YQ(2*A_s*over+1:over:2*A_s*over+1+N*over);
+YI_sampled = YI(2*A_s*over+1:over:2*A_s*over+1+N*over); 
+YQ_sampled = YQ(2*A_s*over+1:over:2*A_s*over+1+N*over); 
 figure() ; scatter(YI_sampled, YQ_sampled); grid on ; title('A.11 Sampled');
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % A.12
-YI_est = detect_4_PAM(YI_sampled, A);
-YQ_est = detect_4_PAM(YQ_sampled, A);
+YI_est = detect_4_PAM(YI_sampled, A); 
+YQ_est = detect_4_PAM(YQ_sampled, A); 
 figure() ; scatter(YI_est, YQ_est) ; grid on; title('A.12 Estimations');
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % A.13
-I_err = 0;
-Q_err = 0;
+YI_est = YI_est(1:end-1); YQ_est = YQ_est(1:end-1);
+I_err = 0; Err_I=zeros(1,length(YI_est)); Err_I(Err_I==0)=nan;
+Q_err = 0; Err_Q=zeros(1,length(YQ_est)); Err_Q(Err_Q==0)=nan;
 for i=1:N
     if(YI_est(i) ~= XI_n(i))
         I_err = I_err + 1;
+        Err_I(i) = YI_est(i);
     end
     if(YQ_est(i) ~= XQ_n(i))
         Q_err = Q_err + 1;
+        Err_Q(i) = YQ_est(i);
     end
 end
 IQ_err = Q_err + I_err;
@@ -121,15 +124,16 @@ est_bit_X = [est_bit_XI est_bit_XQ];
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % A.15
-ber = 0;
+ber = 0; Err_b=zeros(1,length(bit_seq)); Err_b(Err_b==0)=nan;
 for i=1:length(bit_seq)
     if(bit_seq(i) ~= est_bit_X(i))
         ber = ber + 1;
+        Err_b(i) = bit_seq(i); 
     end
 end
 disp(['A.15: BER: ', num2str(ber), '/', num2str(N*4)]); 
 
-% debug_PAM_bits(XI_n, XQ_n, YI_est, YQ_est, bit_seq, A, 25, '')
+debug_PAM_bits(XI_n, XQ_n, Err_I, Err_Q, bit_seq, Err_b, '')
 
 
 
