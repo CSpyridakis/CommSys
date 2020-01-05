@@ -29,7 +29,7 @@ XQ_n = Xn(N+1:2*N);                % Quadrature Symbols
 
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % A.4
-T = 0.01 ; over = 10 ; Ts = T/over ; A_s = 4 ; a = 0.5;   % TODO: Check a and A
+T = 0.01 ; over = 10 ; Ts = T/over ; A_s = 4 ; a = 0.5;   
 Nf = 2048 ; Fs = 1/Ts ; F = [-Fs/2 : Fs/Nf : Fs/2-Fs/Nf]; % Frequency vector
 
 % Phi
