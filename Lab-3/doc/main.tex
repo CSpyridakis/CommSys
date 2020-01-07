@@ -408,7 +408,7 @@ figure() ; scatter(YI_sampled, YQ_sampled); grid on ; title('A.11 Sampled');
     \end{figure}
     
     \par \noindent
-    Παραπάνω παρουσιάζεται το scatterplot και για $SNR_{dB}=20$ καθώς είναι πιο κοντά σε αυτό που θα περιμέναμε να δούμε, όμως κρατήθηκε η υλοποίηση για $SNR_{dB}=10$ ώστε να έχουμε περισσότερα σφάλματα και να μπορούμε να δούμε αποτελέσματα και για τα επόμενα ερωτήματα. 
+    \textbf{Σημείωση:} Παραπάνω παρουσιάζεται το scatterplot και για $SNR_{dB}=20$ καθώς είναι πιο κοντά σε αυτό που θα περιμέναμε να δούμε, όμως κρατήθηκε η υλοποίηση για $SNR_{dB}=10$ ώστε να έχουμε περισσότερα σφάλματα και να μπορούμε να δούμε αποτελέσματα και για τα επόμενα ερωτήματα. 
     
     %-------------------------------------
     %   A.12 subsection
@@ -442,6 +442,9 @@ YI_est = detect_4_PAM(YI_sampled, A);
 YQ_est = detect_4_PAM(YQ_sampled, A); 
 figure() ; scatter(YI_est, YQ_est) ; grid on; title('A.12 Estimations');
     \end{lstlisting}
+    
+    \par \noindent
+    Παρακάτω εμφανίζεται και το scatterplot σε αυτήν την περίπτωση, όπου θα μπορέσουμε να παρατηρήσουμε την εξάλειψη του θορύβου.
     
     \begin{figure}[H]
         \centering
@@ -545,10 +548,12 @@ disp(['A.15: BER: ', num2str(ber), '/', num2str(N*4)]);
     
     \begin{figure}[H]
         \centering
-        \includegraphics[scale=0.5, width=\textwidth]{img/A13_A15_errors.png} \\
+        \includegraphics[scale=0.5, width=0.87\textwidth]{img/A13_A15_errors.png} \\
         \caption{\texttt{Error Symbols/Bits Vs Original}}
     \end{figure}
     
+    \par \noindent
+    \textbf{Σημείωση:} Αν από το Α.13 το $SER=0$ τότε θα πρέπει και στο Α.15 το $BER=0$ πράγμα που θα σημαίνει ότι έχει ανακτηθεί πλήρως όλη η πληροφορία που έχουμε μεταδώσει, κάτι που για $SNR_{dB}=20$ ήταν αρκετά συχνό στα πειράματα.
     
 %---------------------------------------------------------------------------------------------------------------
 %
