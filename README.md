@@ -11,12 +11,14 @@ If you want more information about each lab you could read (or just try to read,
 
 1. [Lab 1 - Report](./Lab-1/doc/Communication_Systems_1_Exercise_1.pdf)
 2. [Lab 2 - Report](./Lab-2/doc/Communication_Systems_1_Exercise_2.pdf)
+3. [Lab 3 - Report](./Lab-3/doc/Communication_Systems_1_Exercise_3.pdf)
 
 ### Code
 Moreover, code created for these labs is available here:
 
 1. [Lab 1](./Lab-1/src)
 2. [Lab 2](./Lab-2/src)
+2. [Lab 3](./Lab-3/src)
 
 ### Enviroment
 * Code: This project was developed using [Matlab R2014b](https://mathworks.com)
